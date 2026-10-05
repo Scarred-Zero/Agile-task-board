@@ -3,88 +3,86 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Agile Task Board</title>
+        <title>Agile task board - layout poitioning</title>
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <!-- MAin Application Container -->
+        <header class="app-header">
+            <div class="header-brand">
+                <h1>Agile Task Board</h1>
+            </div>
+            <button class="btn-primary" id="open-modal-btn">+ New Task</button>
+        </header>
+
+        <!-- Main Board Container -->
         <main class="kanban-board">
-            <!-- A single Kanban Column -->
+            <!-- To Do Column -->
             <section class="kanban-column">
                 <header class="column-header">
-                    <h2>To do</h2>
+                    <h2>To Do</h2>
                 </header>
 
-                <!-- Task Card 1 -->
+                <!-- Task Card with Absolute Action Button -->
                 <article class="task-card">
+                    <span class="priority-badge">HIGH</span>
+                    <button class="card-action-btn" aria-label="Task options">
+                        &vellip;
+                    </button>
                     <span class="task-tag">Backend</span>
                     <h3>Setup Database Schema</h3>
-                    <p>Design PostgreSQL tables for Users and Tasks</p>
+                    <p>
+                        Design PostgreSQL tables for Users, Boards, and Tasks.
+                    </p>
                 </article>
 
-                <!-- Task Card 2 -->
                 <article class="task-card">
+                    <button class="card-action-btn" aria-label="Task options">
+                        &vellip;
+                    </button>
+                    <span class="task-tag">Architecture</span>
                     <h3>Configure FastAPI Routing</h3>
-                    <p>Set up base REST endpoints for the task model</p>
-                </article>
-            </section>
-            
-            <section class="kanban-column">
-                <header class="column-header">
-                    <h2>To do</h2>
-                </header>
-
-                <!-- Task Card 1 -->
-                <article class="task-card">
-                    <span class="task-tag">Backend</span>
-                    <h3>Setup Database Schema</h3>
-                    <p>Design PostgreSQL tables for Users and Tasks</p>
-                </article>
-
-                <!-- Task Card 2 -->
-                <article class="task-card">
-                    <h3>Configure FastAPI Routing</h3>
-                    <p>Set up base REST endpoints for the task model</p>
-                </article>
-            </section>
-
-            <section class="kanban-column">
-                <header class="column-header">
-                    <h2>To do</h2>
-                </header>
-
-                <!-- Task Card 1 -->
-                <article class="task-card">
-                    <span class="task-tag">Backend</span>
-                    <h3>Setup Database Schema</h3>
-                    <p>Design PostgreSQL tables for Users and Tasks</p>
-                </article>
-
-                <!-- Task Card 2 -->
-                <article class="task-card">
-                    <h3>Configure FastAPI Routing</h3>
-                    <p>Set up base REST endpoints for the task model</p>
-                </article>
-            </section>
-
-            <section class="kanban-column">
-                <header class="column-header">
-                    <h2>To do</h2>
-                </header>
-
-                <!-- Task Card 1 -->
-                <article class="task-card">
-                    <span class="task-tag">Backend</span>
-                    <h3>Setup Database Schema</h3>
-                    <p>Design PostgreSQL tables for Users and Tasks</p>
-                </article>
-
-                <!-- Task Card 2 -->
-                <article class="task-card">
-                    <h3>Configure FastAPI Routing</h3>
-                    <p>Set up base REST endpoints for the task model</p>
+                    <p>Set up base REST endpoints for task CRUD operations.</p>
                 </article>
             </section>
         </main>
+
+        <!-- Fixed Visual Overlay Modal Backdrop -->
+        <div class="modal-backdrop" id="task-modal">
+            <div
+                class="modal-dialog"
+                role="dialog"
+                aria-labelledby="modal-title"
+                aria-modal="true"
+            >
+                <button class="modal-close-btn" aria-label="Close modal">
+                    &times;
+                </button>
+                <h2 id="modal-title">Create New Task</h2>
+                <form class="modal-form">
+                    <label for="task-title">Task Title</label>
+                    <input
+                        type="text"
+                        id="task-title"
+                        name="title"
+                        placeholder="e.g., Implement JWT Auth"
+                        required
+                    />
+
+                    <label for="task-desc">Description</label>
+                    <textarea
+                        id="task-desc"
+                        name="description"
+                        rows="4"
+                        placeholder="Task details..."
+                    ></textarea>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            Save Task
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </body>
 </html>
