@@ -11,7 +11,7 @@
             <div class="header-brand">
                 <h1>Agile Task Board</h1>
             </div>
-            <button class="btn-primary" id="open-modal-btn">+ New Task</button>
+            <button class="btn-primary" id="open-modal-btn" onclick="document.getElementById('task-modal').style.display = 'flex'">+ New Task</button>
         </header>
 
         <!-- Main Board Container -->
@@ -23,11 +23,16 @@
                 </header>
 
                 <!-- Task Card with Absolute Action Button -->
-                <article class="task-card">
+                <article class="task-card" onclick=" document.getElementById('task-sidebar').classList.toggle('open')">
                     <span class="priority-badge">HIGH</span>
                     <button class="card-action-btn" aria-label="Task options">
                         &vellip;
                     </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item">Edit</button>
+                        <button class="dropdown-item">Move Column</button>
+                        <button class="dropdown-item">Delete</button>
+                    </div>
                     <span class="task-tag">Backend</span>
                     <h3>Setup Database Schema</h3>
                     <p>
@@ -46,6 +51,16 @@
             </section>
         </main>
 
+        <aside id="task-sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h2>Task Details</h2>
+                <button id="close-sidebar">&times;</button>
+            </div>
+            <div class="sidebar-body">
+                <p>Details about the selected task go here.</p>
+            </div>
+        </aside>
+
         <!-- Fixed Visual Overlay Modal Backdrop -->
         <div class="modal-backdrop" id="task-modal">
             <div
@@ -54,7 +69,7 @@
                 aria-labelledby="modal-title"
                 aria-modal="true"
             >
-                <button class="modal-close-btn" aria-label="Close modal">
+                <button class="modal-close-btn" aria-label="Close modal" onclick="document.getElementById('task-modal').style.display = 'none '">
                     &times;
                 </button>
                 <h2 id="modal-title">Create New Task</h2>
