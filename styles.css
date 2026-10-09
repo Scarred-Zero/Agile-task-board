@@ -109,6 +109,7 @@ body {
 }
 
 .task-card-header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     /* Tag left, Button right */
@@ -252,7 +253,7 @@ body {
 }
 
 .drawer-header .btn-close {
-    flex-shrink: 0;  
+    flex-shrink: 0;
     position: absolute;
     top: 2rem;
     right: 1rem;
@@ -320,6 +321,71 @@ body {
     border-radius: 8px;
     font-family: inherit;
 }
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.modal-footer .modal-action-btn {
+    padding: 1rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+}
+
+.modal-footer .modal-action-btn:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+    transform: translateY(-10%);
+}
+
+.modal-footer .modal-actions-right {
+    padding: 0.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.modal-footer .modal-actions-left .modal-action-btn {
+    background-color: rgba(255, 0, 0, 0.294);
+    color: red;
+    border: 1px red dashed;
+}
+
+.modal-footer .modal-actions-right #modal-cancel {
+    background-color: rgba(0, 72, 255, 0.294);
+    color: rgb(0, 115, 255);
+}
+
+.modal-footer .modal-actions-right #modal-save {
+    background-color: #ffaa0065;
+    color: #ffab00;
+}
+
+.modal-footer .modal-actions-left .modal-action-btn:hover {
+    background-color: red;
+    color: white;
+    border: none;
+}
+
+.modal-footer .modal-actions-right #modal-cancel:hover {
+    background-color: rgb(0, 115, 255);
+    color: white;
+    border: none;
+}
+
+.modal-footer .modal-actions-right #modal-save:hover {
+    background-color: #ffab00;
+    color: white;
+    border: none;
+}
+
 
 /* .sidebar {
     position: fixed;

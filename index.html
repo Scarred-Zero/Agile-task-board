@@ -349,7 +349,12 @@
                 <h2 class="activity-title">Activity Log</h2>
                 <button class="btn-close">X</button>
             </header>
-            <div class="drawer-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam debitis sunt quod! Necessitatibus, possimus! Veritatis facere necessitatibus atque quia? Hic necessitatibus ratione tempore quos, optio saepe. Ut dolores quasi praesentium?</div>
+            <div class="drawer-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
+                debitis sunt quod! Necessitatibus, possimus! Veritatis facere
+                necessitatibus atque quia? Hic necessitatibus ratione tempore
+                quos, optio saepe. Ut dolores quasi praesentium?
+            </div>
         </aside>
 
         <!-- Fixed Visual Overlay Modal Backdrop -->
@@ -389,10 +394,22 @@
                         placeholder="Task details..."
                     ></textarea>
 
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">
-                            Save Task
-                        </button>
+                    <div class="modal-footer">
+                        <div class="modal-actions-left">
+                            <button class="modal-action-btn" id="modal-delete">
+                                Delete
+                            </button>
+                        </div>
+
+
+                        <div class="modal-actions-right">
+                            <button class="modal-action-btn" id="modal-cancel">
+                                Cancel
+                            </button>
+                            <button class="modal-action-btn" id="modal-save">
+                                Save Task
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
