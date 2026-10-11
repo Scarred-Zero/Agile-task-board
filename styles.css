@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: rgb(55, 73, 75);
+    background-color: rgb(34, 41, 42);
     padding: 0 1rem;
     min-height: 150vh;
 }
@@ -370,6 +370,49 @@ body {
         "actions  actions";
     gap: 1.25rem;
     margin-top: 1rem;
+}
+
+.analytics-widget-panel {
+    display: grid;
+    grid-template-columns: 2fr, 1fr;
+    grid-template-areas:
+        "velocity  velocity"
+        "burndown  members";
+    gap: 1rem;
+    background-color: #f4f5f7;
+    padding: 1.25rem;
+    border-radius: 8px;
+    border: 1px solid #dfe1e6;
+}
+
+.widget-card {
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(9, 30, 66, 0.4);
+}
+
+.widget-card h4 {
+  font-size: 0.9rem;
+  color: #172b4d;
+  margin-bottom: 0.25rem;
+}
+
+.widget-card p {
+  font-size: 0.8rem;
+  color: #5e6c84;
+}
+
+.area-velocity {
+    grid-area: velocity;
+}
+
+.area-burndown {
+    grid-area: burndown;
+}
+
+.area-members {
+    grid-area: members;
 }
 
 .area-title {
