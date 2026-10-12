@@ -6,19 +6,18 @@
 }
 
 ::-webkit-scrollbar {
-  width: 10px;      /* Width of a vertical scrollbar */
-  height: 10px;     /* Height of a horizontal scrollbar */
+  width: 5px;      /* Width of a vertical scrollbar */
 }
 
 /* 2. Style the background track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #1a1717;
   border-radius: 5px;
 }
 
 /* 3. Style the draggable handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #5e6d80;
   border-radius: 5px;
 }
 
@@ -35,13 +34,19 @@ body {
     z-index: 100;
     display: flex;
     flex-direction: column;
-    background-color: #0052cc;
+    background-color: #1353428c;
+    backdrop-filter: blur(5px);
     color: #ffffff;
     padding: 1rem;
     gap: 0.75rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
     border-radius: 8px;
     text-align: center;
+}
+
+.app-header > .header-brand > h1 {
+    font-size: 1.2rem;
+    text-align: left;
 }
 
 .navbar {
@@ -90,7 +95,7 @@ body {
 .dashboard-summary {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
@@ -356,15 +361,15 @@ body {
 
 .modal-backdrop #modal-title {
     color: gold;
-    font-size: 0.95rem;
+    font-size: 1.2rem;
 }
 
 .modal-dialog {
     position: relative;
     background-color: rgba(22, 21, 21, 0.6);
-    width: 70% !important;
+    width: 90% !important;
     padding: 0.8rem;
-    margin: 1rem;
+    margin: auto;
     border-radius: 8px;
     box-shadow: 0 8px 16px rgba(9, 30, 66, 0.8);
     overflow-y: auto;
@@ -383,7 +388,7 @@ body {
 
 .modal-form {
     display: grid;
-    grid-template-columns: 180px !important;
+    grid-template-columns: 250px !important;
     grid-template-areas:
         "title"
         "category" 
@@ -487,19 +492,19 @@ body {
 
 .form-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-around;
     align-items: center;
     gap: 0.75rem;
     padding-top: 0.5rem;
-    border-top: 1px solid #f4f5f7;
+    border-top: 1px solid #f4f5f73e;
 }
 
 .form-actions .modal-action-btn {
-    padding: 1rem;
+    padding: 0.9rem;
     border-radius: 8px;
     border: none;
     outline: none;
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
     transition: all 200ms ease-in-out;

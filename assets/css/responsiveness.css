@@ -11,6 +11,10 @@
         gap: 1.5rem;
     }
 
+    .dashboard-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     /* Transition Kanban columns into a 2x2 Grid on tablets */
     .kanban-board {
         display: grid;
@@ -38,22 +42,41 @@
 @media (min-width: 1024px) {
     .kanban-board {
         display: flex;
-        flex-direction: row;
-        /* Horizontal flex row for Kanban columns */
+        flex-direction: column;
         align-items: flex-start;
         gap: 1.5rem;
         padding: 2rem;
-        overflow-x: auto;
         height: calc(100vh - 75px);
     }
 
+    .dashboard-summary {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .analytics-widget-panel {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-areas:
+            "velocity burndown members";
+        width: 100%;
+    }
+
     .kanban-column {
-        flex: 0 0 350px !important;
-        /* Fixed 350px width per column */
         max-height: 100%;
     }
 
     .modal-dialog {
         width: 500px !important;
+    }
+
+    .board-columns-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .board-gallery-grid {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100% !important;
     }
 }
