@@ -521,6 +521,35 @@ body {
     border: none;
 }
 
+.board-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.board-gallery-grid .project-cards {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(9, 30, 66, 0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.board-gallery-grid .project-cards h3 {
+    font-size: 1.1rem;
+    color: #172b4d;
+    margin-bottom: 0.5rem;
+}
+
+.board-gallery-grid .project-cards p {
+    font-size: 0.9rem;
+    color: #5e6c84;
+}
+
+.board-gallery-grid .project-cards:hover {
+    transform: translateY(-5%);
+    box-shadow: 0 8px 12px rgba(9, 30, 66, 0.5);
+}
 
 /* .sidebar {
     position: fixed;
