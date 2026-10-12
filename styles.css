@@ -16,15 +16,15 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    display: flex;
+    flex-direction: column;
     background-color: #0052cc;
     color: #ffffff;
-    padding: 0.5rem 1rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    padding: 1rem;
+    gap: 0.75rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
     border-radius: 8px;
+    text-align: center;
 }
 
 .navbar {
@@ -33,8 +33,9 @@ body {
 
 .navbar ul {
     display: flex;
+    flex-direction: column;
     list-style: none;
-    gap: 3rem;
+    gap: 0.75rem;
 }
 
 .navbar ul li a {
@@ -63,18 +64,16 @@ body {
 .kanban-board {
     display: flex;
     flex-direction: column;
-    /* Stack summary on top, columns below */
-    gap: 1.5rem;
-    padding: 1.5rem;
-    overflow-x: auto;
-    min-height: calc(100vh - 75px);
+    gap: 1.25rem;
+    padding: 1rem;
+    height: auto;
+    overflow-x: visible;
 }
 
 .dashboard-summary {
     width: 100%;
     display: grid;
-    /* 4 explicit equal columns using fractional units */
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
@@ -128,7 +127,7 @@ body {
 
 .board-columns-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
     width: 100%;
@@ -136,13 +135,13 @@ body {
 
 .kanban-column {
     display: flex;
+    flex-direction: column;
     background-color: #f4f5f7;
     color: black;
-    width: 350px;
-    border-radius: 8px;
-    max-height: 100%;
-    flex-direction: column;
+    width: 100% !important;
+    max-height: none;
     padding: 1rem;
+    border-radius: 8px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -329,7 +328,6 @@ body {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
     background-color: rgba(4, 28, 44, 0.54);
     backdrop-filter: blur(5px);
     z-index: 1000;
@@ -340,11 +338,10 @@ body {
 
 .modal-dialog {
     position: relative;
-    /* Containing block for the close button */
     background-color: #ffffff;
-    width: 100%;
-    max-width: 500px;
-    padding: 2rem;
+    width: 70% !important;
+    padding: 1.25rem;
+    margin: 1rem;
     border-radius: 8px;
     box-shadow: 0 8px 16px rgba(9, 30, 66, 0.8);
 }
@@ -362,14 +359,16 @@ body {
 
 .form-group {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr !important;
     grid-template-areas:
-        "title    title"
-        "category priority"
-        "desc     desc"
-        "actions  actions";
-    gap: 1.25rem;
-    margin-top: 1rem;
+        "title"
+        "category" 
+        "priority"
+        "desc"
+        "actions" !important;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    height: auto;
 }
 
 .analytics-widget-panel {
@@ -435,11 +434,7 @@ body {
     grid-area: actions;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-}
+
 
 .form-group label {
     font-size: 0.85rem;
