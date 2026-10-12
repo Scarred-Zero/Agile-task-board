@@ -1,0 +1,59 @@
+/* Tablet Breakpoint */
+@media (min-width: 768px) {
+    .app-header {
+        flex-direction: row;
+        padding: 0.75rem 1.5rem;
+        text-align: left;
+    }
+
+    .navbar ul {
+        flex-direction: row;
+        gap: 1.5rem;
+    }
+
+    /* Transition Kanban columns into a 2x2 Grid on tablets */
+    .kanban-board {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .kanban-column {
+        width: 100% !important;
+    }
+
+    .modal-form {
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-areas:
+            "title    title"
+            "category priority"
+            "desc     desc"
+            "actions  actions" !important;
+    }
+}
+
+
+/* 3. Desktop / Laptop Breakpoint (min-width: 1024px) */
+@media (min-width: 1024px) {
+    .kanban-board {
+        display: flex;
+        flex-direction: row;
+        /* Horizontal flex row for Kanban columns */
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 2rem;
+        overflow-x: auto;
+        height: calc(100vh - 75px);
+    }
+
+    .kanban-column {
+        flex: 0 0 350px !important;
+        /* Fixed 350px width per column */
+        max-height: 100%;
+    }
+
+    .modal-dialog {
+        width: 500px !important;
+    }
+}

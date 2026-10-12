@@ -4,7 +4,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Agile task board - layout poitioning</title>
-        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="../css/styles.css" />
+        <link rel="stylesheet" href="../css/responsiveness.css" />
     </head>
     <body>
         <header class="app-header">
@@ -384,8 +385,8 @@
                     &times;
                 </button>
                 <h2 id="modal-title">Create New Task</h2>
-                <form class="form-group">
-                    <div class="form-group area-title">
+                <form class="modal-form">
+                    <div class="modal-form area-title">
                         <label for="task-title">Task Title</label>
                         <input
                             type="text"
@@ -396,7 +397,7 @@
                         />
                     </div>
 
-                    <div class="form-group area-category">
+                    <div class="modal-form area-category">
                         <label for="task-category">Category</label>
                         <select id="task-category" name="category">
                             <option value="frontend">Frontend</option>
@@ -406,7 +407,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group area-priority">
+                    <div class="modal-form area-priority">
                         <label for="task-priority">Priority</label>
                         <select id="task-priority" name="priority">
                             <option value="low">Low</option>
@@ -415,7 +416,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group area-desc">
+                    <div class="modal-form area-desc">
                         <label for="task-desc">Description</label>
                         <textarea
                             id="task-desc"
