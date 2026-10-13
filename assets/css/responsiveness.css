@@ -1,19 +1,5 @@
 /* Tablet Breakpoint */
 @media (min-width: 768px) {
-    ::-webkit-scrollbar {
-        width: 5px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: #1a1717;
-        border-radius: 5px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: #135342;
-        border-radius: 5px;
-    }
-
     .app-header {
         flex-direction: row;
         padding: 0.75rem 1.5rem;
@@ -42,11 +28,67 @@
     .kanban-column {
         width: 100% !important;
     }
+
+    .modal-backdrop #modal-title {
+        font-size: 1.4rem;
+    }
+
+    .modal-form label {
+        font-size: 0.85rem;
+    }
+
+    .modal-form input,
+    .modal-form select,
+    .modal-form textarea {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .drawer-content .timeline-item {
+        grid-template-columns: 60px 1fr;
+    }
+
+    .drawer-content .user-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .drawer-content .timeline-item .item-details {
+        padding: 0.5rem;
+    }
+
+    .drawer-content .timeline-item .item-details .activity-text {
+        font-size: 0.9rem;
+    }
+
+    .drawer-content .timeline-item .item-details .activity-comment {
+        font-size: 0.8rem;
+        padding: 0.4rem;
+        border-radius: 8px;
+    }
+
+    .drawer-content .timeline-item .item-details .activity-time {
+        font-size: 0.7rem;
+    }
 }
 
 
 /* 3. Desktop / Laptop Breakpoint (min-width: 1024px) */
 @media (min-width: 1024px) {
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #1a1717;
+        border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #135342;
+        border-radius: 5px;
+    }
+
     .kanban-board {
         display: flex;
         flex-direction: column;
@@ -84,5 +126,58 @@
         flex-direction: row;
         justify-content: space-around;
         width: 100% !important;
+    }
+
+    .modal-dialog {
+        width: 90% !important;
+        padding: 1rem;
+        margin: auto;
+        overflow-y: auto;
+    }
+
+    .modal-backdrop #modal-title {
+        font-size: 2rem;
+    }
+
+    .modal-form label {
+        font-size: 1rem;
+    }
+
+    .modal-form input,
+    .modal-form select,
+    .modal-form textarea {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .form-actions .modal-action-btn {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+
+    .drawer-content .timeline-item {
+        grid-template-columns: 80px 1fr;
+    }
+
+    .drawer-content .user-avatar {
+        width: 60px;
+        height: 60px;
+    }
+
+    .drawer-content .timeline-item .item-details {
+        padding: 0.7rem;
+    }
+
+    .drawer-content .timeline-item .item-details .activity-text {
+        font-size: 1rem;
+    }
+
+    .drawer-content .timeline-item .item-details .activity-comment {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+
+    .drawer-content .timeline-item .item-details .activity-time {
+        font-size: 0.8rem;
     }
 }
