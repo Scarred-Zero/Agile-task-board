@@ -621,5 +621,19 @@
                 </form>
             </div>
         </div>
+
+        <script>
+            const themeToggleBtn = document.getElementById("theme-toggle-btn");
+            const htmlRoot = document.documentElement;
+
+            themeToggleBtn.addEventListener("click", () => {
+                const currentTheme = htmlRoot.getAttribute("data-theme");
+                if (currentTheme === "dark") {
+                    htmlRoot.removeAttribute("data-theme");
+                } else {
+                    htmlRoot.setAttribute("data-theme", "dark");
+                }
+            });
+        </script>
     </body>
 </html>

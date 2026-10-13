@@ -44,8 +44,16 @@
         font-size: 0.85rem;
     }
 
+    .activity-drawer {
+        width: 400px;
+    }
+
     .drawer-header .drawer-title {
         font-size: 2rem;
+    }
+
+    .drawer-content {
+        max-height: 500px;
     }
 
     .drawer-content .timeline-item {
@@ -62,17 +70,17 @@
     }
 
     .drawer-content .timeline-item .item-details .activity-text {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
     }
 
     .drawer-content .timeline-item .item-details .activity-comment {
-        font-size: 1.2rem;
+        font-size: 1rem;
         padding: 0.4rem;
         border-radius: 8px;
     }
 
     .drawer-content .timeline-item .item-details .activity-time {
-        font-size: 1rem;
+        font-size: 0.8rem;
     }
 }
 
@@ -160,12 +168,12 @@
     }
 
     .drawer-content .timeline-item {
-        grid-template-columns: 80px 1fr;
+        grid-template-columns: 60px 1fr;
     }
 
     .drawer-content .user-avatar {
-        width: 65px;
-        height: 65px;
+        width: 50px;
+        height: 50px;
     }
 
     .drawer-content .timeline-item .item-details {
@@ -173,15 +181,15 @@
     }
 
     .drawer-content .timeline-item .item-details .activity-text {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     .drawer-content .timeline-item .item-details .activity-comment {
-        font-size: 1.1rem;
-        padding: 0.5rem;
+        font-size: 0.9rem;
+        padding: 0.4rem;
     }
 
     .drawer-content .timeline-item .item-details .activity-time {
-        font-size: 1rem;
+        font-size: 0.8rem;
     }
 }

@@ -1,1 +1,0 @@
-let grid = rows, columns;
