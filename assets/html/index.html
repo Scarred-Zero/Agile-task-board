@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="../css/responsiveness.css" />
     </head>
     <body>
-        <!-- <header class="app-header">
+        <header class="app-header">
             <div class="header-brand">
                 <h1>Agile Task Board</h1>
             </div>
@@ -19,16 +19,29 @@
                     <li><a href="#">Settings</a></li>
                 </ul>
             </nav>
-            <button
-                class="btn-primary"
-                id="open-modal-btn"
-                onclick="
-                    document.getElementById('task-modal').style.display = 'flex'
-                "
+            <div
+                class="header-actions"
+                style="display: flex; gap: 0.75rem; align-items: center"
             >
-                + New Task
-            </button>
-        </header> -->
+                <button
+                    class="btn-theme-toggle"
+                    id="theme-toggle-btn"
+                    aria-label="Toggle dark mode"
+                >
+                    🌓
+                </button>
+                <button
+                    class="btn-primary"
+                    id="open-modal-btn"
+                    onclick="
+                        document.getElementById('task-modal').style.display =
+                            'flex'
+                    "
+                >
+                    + New Task
+                </button>
+            </div>
+        </header>
 
         <!-- Main Board Container -->
         <main class="kanban-board">
@@ -82,8 +95,6 @@
                             drawer.setAttribute('aria-hidden', 'false');
                         "
                     >
-
-
                         <div class="priority-indicator high">High</div>
                         <header class="task-card-header">
                             <span class="category-tag">Frontend</span>
@@ -610,5 +621,19 @@
                 </form>
             </div>
         </div>
+
+        <script>
+            const themeToggleBtn = document.getElementById("theme-toggle-btn");
+            const htmlRoot = document.documentElement;
+
+            themeToggleBtn.addEventListener("click", () => {
+                const currentTheme = htmlRoot.getAttribute("data-theme");
+                if (currentTheme === "dark") {
+                    htmlRoot.removeAttribute("data-theme");
+                } else {
+                    htmlRoot.setAttribute("data-theme", "dark");
+                }
+            });
+        </script>
     </body>
 </html>

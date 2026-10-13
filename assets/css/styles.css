@@ -1,4 +1,50 @@
-/* Universal Reset & Box Model FIx */
+:root {
+    /* Primitive & Semantic Light Tokens */
+    --bg-canvas: rgb(55, 73, 75);
+    --bg-surface: #ffffff;
+    --bg-column: #f4f5f7;
+    --text-main: #172b4d;
+    --text-muted: #5e6c84;
+    --border-color: #dfe1e6;
+    --primary-color: #0052cc;
+    --primary-hover: #0747a6;
+    --accent-btn: #ffab00;
+    --card-shadow: 0 4px 5px rgba(9, 30, 66, 0.9);
+    --modal-bg: rgba(4, 28, 44, 0.54);
+    --drawer-bg: rgba(0, 0, 0, 0.7);
+    
+    --badge-high-bg: #ae3c3c6f;
+    --badge-high-text: rgb(206, 13, 13);
+    --badge-medium-bg: #a4a41940;
+    --badge-medium-text: goldenrod;
+    --tag-bg: #5193bf65;
+    --tag-text: #0369a1;
+    --activity-width: red;
+}
+
+[data-theme="dark"] {
+    /* Semantic Dark Tokens */
+    --bg-canvas: #0b0f19;
+    --bg-surface: #1e293b;
+    --bg-column: #111827;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --primary-color: #3b82f6;
+    --primary-hover: #2563eb;
+    --accent-btn: #f59e0b;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    --modal-bg: rgba(2, 6, 23, 0.8);
+    --drawer-bg: rgba(15, 23, 42, 0.9);
+
+    --badge-high-bg: #e19999;
+    --badge-high-text: rgb(192, 16, 16);
+    --badge-medium-bg: #f0f0a5;
+    --badge-medium-text: rgb(172, 125, 4);
+    --tag-bg: rgb(52, 82, 97);
+    --tag-text: #7dd3fc;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,9 +53,11 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: rgb(34, 41, 42);
+    background-color: var(--bg-canvas);
+    color: var(--text-main);
     padding: 0 1rem;
     min-height: 150vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app-header {
@@ -18,7 +66,7 @@ body {
     z-index: 100;
     display: flex;
     flex-direction: column;
-    background-color: #0741319c;
+    background-color: var(--primary-color);
     backdrop-filter: blur(8px);
     color: #ffffff;
     padding: 1rem;
@@ -47,7 +95,7 @@ body {
 .navbar ul li a {
     text-decoration: none;
     outline: none;
-    color: goldenrod;
+    color: var(--accent-btn);
     font-weight: bold;
     font-size: 1.1rem;
     transition: all 0.2s ease-in-out;
@@ -58,13 +106,29 @@ body {
 }
 
 .btn-primary {
-    background-color: #ffab00;
+    background-color: var(--accent-btn);
     color: #172b4d;
     border: none;
     padding: 0.6rem 1.2rem;
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.btn-theme-toggle {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #ffffff;
+    border: none;
+    outline: none;
+    padding: 0.5rem 0.75rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .kanban-board {
@@ -142,25 +206,26 @@ body {
 .kanban-column {
     display: flex;
     flex-direction: column;
-    background-color: #f4f5f7;
-    color: black;
+    background-color: var(--bg-column);
+    color: var(--text-main);
     width: 100% !important;
     max-height: none;
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
 }
 
 .task-card {
     position: relative;
-    background-color: #ffffff;
-    color: darkred;
+    background-color: var(--bg-surface);
+    color: var(--text-main);
     border-radius: 6px;
-    border: 1px solid #dfe1e6;
+    border: 1px solid var(--border-color);
     padding: 1rem;
     margin-bottom: 0.8rem;
     cursor: pointer;
-    box-shadow: 0 3px 4px rgba(9, 30, 66, 0.3);
+    box-shadow: var(--card-shadow);
     display: flex;
     flex-direction: column;
     word-break: break-word;
@@ -238,7 +303,7 @@ body {
 
 .column-header h2 {
     font-size: 1.2rem;
-    color: black;
+    color: var(--text-main);
     margin-bottom: 1rem;
 }
 
@@ -264,19 +329,19 @@ body {
 }
 
 .priority-indicator.high {
-    background-color: #9c22226f;
-    color: darkred;
+    background-color: var(--badge-high-bg);
+    color: var(--badge-high-text);
 }
 
 .priority-indicator.medium {
-    background-color: #82822449;
-    color: goldenrod;
+    background-color: var(--badge-medium-bg);
+    color: var(--badge-medium-text);
 }
 
 .category-tag {
     display: inline-block;
-    background-color: rgb(222, 235, 255);
-    color: rgb(7, 71, 166);
+    background-color: var(--tag-bg);
+    color: var(--tag-text);
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
     font-size: 0.8rem;
@@ -288,12 +353,12 @@ body {
     position: fixed;
     top: 0;
     right: 0;
-    width: 100vw;
+    width: var(--activity-width);
     height: 100vh;
     padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: var(--drawer-bg);
+    color: var(--text-main);
     backdrop-filter: blur(8px);
-    color: #ffffff;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     box-shadow: -2px 0 15px rgba(0, 0, 0, 0.5);
@@ -415,7 +480,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(4, 28, 44, 0.54);
+    background-color: var(--modal-bg);
     backdrop-filter: blur(5px);
     z-index: 1000;
     display: none;
@@ -430,11 +495,13 @@ body {
 
 .modal-dialog {
     position: relative;
-    background-color: rgba(22, 21, 21, 0.728);
+    background-color: var(--bg-surface);
+    color: var(--text-main);
     width: 90% !important;
     padding: 0.8rem;
     margin: auto;
     border-radius: 8px;
+    border: 1px solid var(--border-color);
     box-shadow: 0 8px 16px rgba(9, 30, 66, 0.8);
     overflow-y: auto;
 }
@@ -538,11 +605,13 @@ body {
 .modal-form select,
 .modal-form textarea {
     padding: 0.4rem;
-    border: 1px solid #dfe1e6;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+    color: var(--text-main);
     border-radius: 8px;
     font-family: inherit;
     font-size: 0.7rem;
-    background-color: #fafbfc;
+
 }
 
 .modal-form input:focus,
