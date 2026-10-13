@@ -4,7 +4,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Agile task board - layout poitioning</title>
-        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="../css/styles.css" />
+        <link rel="stylesheet" href="../css/responsiveness.css" />
     </head>
     <body>
         <header class="app-header">
@@ -75,9 +76,10 @@
                     <article
                         class="task-card"
                         onclick="
-                            document
-                                .getElementById('task-sidebar')
-                                .classList.toggle('open')
+                            var drawer =
+                                document.getElementById('activity-drawer');
+                            drawer.classList.add('is-open');
+                            drawer.setAttribute('aria-hidden', 'false');
                         "
                     >
                         <div class="priority-indicator high">High</div>
@@ -107,7 +109,16 @@
                         </footer>
                     </article>
 
-                    <article class="task-card">
+                    <article
+                        class="task-card"
+                        id="task-card-trigger"
+                        onclick="
+                            var drawer =
+                                document.getElementById('activity-drawer');
+                            drawer.classList.add('is-open');
+                            drawer.setAttribute('aria-hidden', 'false');
+                        "
+                    >
                         <div class="priority-indicator medium">Medium</div>
                         <header class="task-card-header">
                             <span class="category-tag">Backend</span>
@@ -138,10 +149,12 @@
 
                     <article
                         class="task-card"
+                        id="task-card-trigger"
                         onclick="
-                            document
-                                .getElementById('task-sidebar')
-                                .classList.toggle('open')
+                            var drawer =
+                                document.getElementById('activity-drawer');
+                            drawer.classList.add('is-open');
+                            drawer.setAttribute('aria-hidden', 'false');
                         "
                     >
                         <div class="priority-indicator high">High</div>
@@ -167,7 +180,16 @@
                         </footer>
                     </article>
 
-                    <article class="task-card">
+                    <article
+                        class="task-card"
+                        id="task-card-trigger"
+                        onclick="
+                            var drawer =
+                                document.getElementById('activity-drawer');
+                            drawer.classList.add('is-open');
+                            drawer.setAttribute('aria-hidden', 'false');
+                        "
+                    >
                         <div class="priority-indicator medium">Medium</div>
                         <header class="task-card-header">
                             <span class="category-tag">Backend</span>
@@ -202,10 +224,12 @@
 
                     <article
                         class="task-card"
+                        id="task-card-trigger"
                         onclick="
-                            document
-                                .getElementById('task-sidebar')
-                                .classList.toggle('open')
+                            var drawer =
+                                document.getElementById('activity-drawer');
+                            drawer.classList.add('is-open');
+                            drawer.setAttribute('aria-hidden', 'false');
                         "
                     >
                         <div class="priority-indicator high">High</div>
@@ -235,7 +259,16 @@
                         </footer>
                     </article>
 
-                    <article class="task-card">
+                    <article
+                        class="task-card"
+                        id="task-card-trigger"
+                        onclick="
+                            var drawer =
+                                document.getElementById('activity-drawer');
+                            drawer.classList.add('is-open');
+                            drawer.setAttribute('aria-hidden', 'false');
+                        "
+                    >
                         <div class="priority-indicator medium">Medium</div>
                         <header class="task-card-header">
                             <span class="category-tag">Backend</span>
@@ -266,10 +299,12 @@
 
                     <article
                         class="task-card"
+                        id="task-card-trigger"
                         onclick="
-                            document
-                                .getElementById('task-sidebar')
-                                .classList.toggle('open')
+                            var drawer =
+                                document.getElementById('activity-drawer');
+                            drawer.classList.add('is-open');
+                            drawer.setAttribute('aria-hidden', 'false');
                         "
                     >
                         <div class="priority-indicator high">High</div>
@@ -295,7 +330,16 @@
                         </footer>
                     </article>
 
-                    <article class="task-card">
+                    <article
+                        class="task-card"
+                        id="task-card-trigger"
+                        onclick="
+                            var drawer =
+                                document.getElementById('activity-drawer');
+                            drawer.classList.add('is-open');
+                            drawer.setAttribute('aria-hidden', 'false');
+                        "
+                    >
                         <div class="priority-indicator medium">Medium</div>
                         <header class="task-card-header">
                             <span class="category-tag">Backend</span>
@@ -352,18 +396,131 @@
             </section>
         </main>
 
-        <!-- <aside class="activity-drawer">
+        <aside
+            id="activity-drawer"
+            class="activity-drawer"
+            aria-labelledby="drawer-title"
+            aria-hidden="true"
+            role="dialog"
+        >
             <header class="drawer-header">
-                <h2 class="activity-title">Activity Log</h2>
-                <button class="btn-close">X</button>
+                <h2 id="drawer-title" class="drawer-title">Activity Log</h2>
+                <button
+                    id="drawer-btn-close"
+                    class="btn-close"
+                    aria-label="Close activity log"
+                    type="button"
+                    onclick="
+                        var drawer = document.getElementById('activity-drawer');
+                        drawer.classList.remove('is-open');
+                        drawer.setAttribute('aria-hidden', 'true');
+                    "
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </header>
+
             <div class="drawer-content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-                debitis sunt quod! Necessitatibus, possimus! Veritatis facere
-                necessitatibus atque quia? Hic necessitatibus ratione tempore
-                quos, optio saepe. Ut dolores quasi praesentium?
+                <!-- Activity Timeline Container -->
+                <ol class="activity-timeline" aria-live="polite">
+                    <!-- Example Timeline Item -->
+                    <li class="timeline-item">
+                        <img
+                            src="../img/avatar-f-placeholder.jpg"
+                            alt="Sarah Jenkins"
+                            class="user-avatar"
+                        />
+
+                        <div class="item-details">
+                            <p class="activity-text">
+                                <strong class="user-name">Sarah Jenkins</strong>
+                                moved this task from
+                                <span class="status-badge">In Progress</span> to
+                                <span class="status-badge">Review</span>
+                            </p>
+                            <time
+                                datetime="2026-10-13T08:30:00Z"
+                                class="activity-time"
+                                title="October 13, 2026, 8:30 AM"
+                                >24 mins ago</time
+                            >
+                        </div>
+                    </li>
+
+                    <!-- Another Example Item -->
+                    <li class="timeline-item">
+                        <img
+                            src="../img/avatar-m-placeholder.jpg"
+                            alt="Alex Rivera"
+                            class="user-avatar"
+                        />
+                        <div class="item-details">
+                            <p class="activity-text">
+                                <strong class="user-name">Alex Rivera</strong>
+                                left a comment
+                            </p>
+                            <blockquote class="activity-comment">
+                                "The new designs are ready for look over. Added
+                                the feedback links."
+                            </blockquote>
+                            <time
+                                datetime="2026-10-13T07:15:00Z"
+                                class="activity-time"
+                                title="October 13, 2026, 7:15 AM"
+                                >1 hour ago</time
+                            >
+                        </div>
+                    </li>
+                    <li class="timeline-item">
+                        <img
+                            src="../img/avatar-f-placeholder.jpg"
+                            alt="Sarah Jenkins"
+                            class="user-avatar"
+                        />
+
+                        <div class="item-details">
+                            <p class="activity-text">
+                                <strong class="user-name">Sarah Jenkins</strong>
+                                moved this task from
+                                <span class="status-badge">In Progress</span> to
+                                <span class="status-badge">Review</span>
+                            </p>
+                            <time
+                                datetime="2026-10-13T08:30:00Z"
+                                class="activity-time"
+                                title="October 13, 2026, 8:30 AM"
+                                >24 mins ago</time
+                            >
+                        </div>
+                    </li>
+
+                    <!-- Another Example Item -->
+                    <li class="timeline-item">
+                        <img
+                            src="../img/avatar-m-placeholder.jpg"
+                            alt="Alex Rivera"
+                            class="user-avatar"
+                        />
+                        <div class="item-details">
+                            <p class="activity-text">
+                                <strong class="user-name">Alex Rivera</strong>
+                                left a comment
+                            </p>
+                            <blockquote class="activity-comment">
+                                "The new designs are ready for look over. Added
+                                the feedback links."
+                            </blockquote>
+                            <time
+                                datetime="2026-10-13T07:15:00Z"
+                                class="activity-time"
+                                title="October 13, 2026, 7:15 AM"
+                                >1 hour ago</time
+                            >
+                        </div>
+                    </li>
+                </ol>
             </div>
-        </aside> -->
+        </aside>
 
         <!-- Fixed Visual Overlay Modal Backdrop -->
         <div class="modal-backdrop" id="task-modal">
@@ -384,8 +541,8 @@
                     &times;
                 </button>
                 <h2 id="modal-title">Create New Task</h2>
-                <form class="form-group">
-                    <div class="form-group area-title">
+                <form class="modal-form">
+                    <div class="modal-form area-title">
                         <label for="task-title">Task Title</label>
                         <input
                             type="text"
@@ -396,7 +553,7 @@
                         />
                     </div>
 
-                    <div class="form-group area-category">
+                    <div class="modal-form area-category">
                         <label for="task-category">Category</label>
                         <select id="task-category" name="category">
                             <option value="frontend">Frontend</option>
@@ -406,7 +563,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group area-priority">
+                    <div class="modal-form area-priority">
                         <label for="task-priority">Priority</label>
                         <select id="task-priority" name="priority">
                             <option value="low">Low</option>
@@ -415,7 +572,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group area-desc">
+                    <div class="modal-form area-desc">
                         <label for="task-desc">Description</label>
                         <textarea
                             id="task-desc"
