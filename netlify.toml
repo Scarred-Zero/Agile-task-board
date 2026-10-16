@@ -1,0 +1,15 @@
+# Netlify Configuration File for Agile Task Board
+[build]
+  # The directory where index.html is located relative to root
+  publish = "dist"
+  # No compilation command needed for vanilla web apps
+  command = ""
+
+# Security and caching headers for production
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = nosniff
+      
