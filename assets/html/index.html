@@ -23,7 +23,7 @@
         </script>
     </head>
     <body>
-        <header class="app-header">
+        <header class="app-header" id="app-header">
             <div class="header-brand">
                 <h1>Agile Task Board</h1>
             </div>
@@ -36,10 +36,8 @@
             </nav>
             <div
                 class="hamburger-menu"
-                onclick="
-                    var navbarToggle = document.getElementById('navbar');
-                    navbarToggle.classList.add('show');
-                "
+                id="hamburgerMenu"
+                onclick="handleToggle()"
             >
                 <i class="bx bx-menu"></i>
             </div>
@@ -49,7 +47,8 @@
                     id="theme-toggle-btn"
                     aria-label="Toggle dark mode"
                 >
-                    🌓
+                    <span class="text-short"> 🌓 </span>
+                    <span class="text-long"> 🌓 Theme</span>
                 </button>
                 <button
                     class="btn-small new-task-btn"
@@ -59,7 +58,8 @@
                             'flex'
                     "
                 >
-                    <i class="bx bx-plus"></i>
+                    <span class="text-short"><i class="bx bx-plus"></i></span>
+                    <span class="text-long"><i class="bx bx-plus"></i> New Task </span>
                 </button>
             </div>
         </header>
@@ -657,6 +657,11 @@
                     localStorage.setItem("theme", "dark");
                 }
             });
+
+            function handleToggle() {
+                const navbarToggle = document.getElementById("navbar");
+                navbarToggle.classList.toggle("show");
+            }
         </script>
     </body>
 </html>

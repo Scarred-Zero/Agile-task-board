@@ -4,13 +4,34 @@
         flex-direction: row;
         padding: 0.75rem 1.5rem;
         text-align: left;
-        justify-content: space-around;
+        gap: 5rem;
         align-items: center;
+    }
+
+    .navbar {
+        display: block;
     }
 
     .navbar ul {
         flex-direction: row;
         gap: 1.5rem;
+    }
+
+    .hamburger-menu {
+        display: none;
+    }
+
+    .text-short {
+        display: none;
+    }
+
+    .text-long {
+        display: block;
+    }
+
+    .app-header .header-actions {
+        top: 1.3rem;
+        right: 2rem;
     }
 
     .dashboard-summary {
@@ -99,6 +120,10 @@
     ::-webkit-scrollbar-thumb {
         background: #135342;
         border-radius: 5px;
+    }
+
+    .app-header {
+        gap: 14rem;
     }
 
     .kanban-board {
