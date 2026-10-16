@@ -4,7 +4,7 @@
         flex-direction: row;
         padding: 0.75rem 1.5rem;
         text-align: left;
-        gap: 5rem;
+        justify-content: space-between;
         align-items: center;
     }
 
@@ -30,8 +30,9 @@
     }
 
     .app-header .header-actions {
-        top: 1.3rem;
-        right: 2rem;
+        position: static;
+        top: auto;
+        right: auto;
     }
 
     .dashboard-summary {
@@ -122,9 +123,6 @@
         border-radius: 5px;
     }
 
-    .app-header {
-        gap: 20rem;
-    }
 
     .kanban-board {
         display: flex;
