@@ -67,7 +67,7 @@
     }
 
     .activity-drawer {
-        width: 400px;
+        width: 500px;
     }
 
     .drawer-header .drawer-title {
@@ -187,10 +187,6 @@
     .form-actions .modal-action-btn {
         padding: 1rem;
         font-size: 1rem;
-    }
-
-    .activity-drawer {
-        width: 500px;
     }
 
     .drawer-content .timeline-item {
