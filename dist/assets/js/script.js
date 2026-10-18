@@ -1,3 +1,9 @@
+
+const htmlRoot = document.documentElement;
+const themeToggleBtn = document.getElementById("theme-toggle-btn");
+const modalBackdrop = document.getElementById("task-modal");
+// const activityDrawer = document.getElementById("activity-drawer");
+
 function themeInitialiser() {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
@@ -6,9 +12,6 @@ function themeInitialiser() {
     return "Theme Applied";
 }
 themeInitialiser();
-
-const themeToggleBtn = document.getElementById("theme-toggle-btn");
-const htmlRoot = document.documentElement;
 
 themeToggleBtn.addEventListener("click", () => {
     const currentTheme = htmlRoot.getAttribute("data-theme");
@@ -31,14 +34,37 @@ function modalCloseBtn() {
     modalBackdrop.style.display = "none ";
 }
 
-function activityCloseBtn() {
-    const drawer = document.getElementById("activity-drawer");
-    drawer.classList.remove("is-open");
-    drawer.setAttribute("aria-hidden", "true");
+modalBackdrop.addEventListener("click", function (event) {
+    if (event.target === modalBackdrop) {
+        modalCloseBtn();
+    }
+});
+
+
+// Ensure you have these element selections defined at the top of your script
+const activityDrawer = document.getElementById("activity-drawer");
+
+function openActivityLog(event) {
+    // Prevent the click event from bubbling up to the document listener below
+    if (event) event.stopPropagation(); 
+    
+    activityDrawer.classList.add("is-open");
+    activityDrawer.setAttribute("aria-hidden", "false");
 }
 
-function openActivityLog() {
-    const drawer = document.getElementById("activity-drawer");
-    drawer.classList.add("is-open");
-    drawer.setAttribute("aria-hidden", "false");
+function activityCloseBtn() {
+    activityDrawer.classList.remove("is-open");
+    activityDrawer.setAttribute("aria-hidden", "true");
 }
+
+// Global listener: Catch clicks anywhere outside the drawer on the webpage
+document.addEventListener("click", function (event) {
+    // Only proceed if the drawer is currently open
+    const isOpen = activityDrawer.classList.contains("is-open");
+
+    // Close the drawer if the click target is NOT the drawer itself, 
+    // and NOT inside any children elements of the drawer
+    if (isOpen && !activityDrawer.contains(event.target)) {
+        activityCloseBtn();
+    }
+});

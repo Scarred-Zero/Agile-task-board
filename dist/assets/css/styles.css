@@ -2,18 +2,25 @@
     /* Primitive & Semantic Light Tokens */
     --bg-canvas: rgb(55, 73, 75);
     --bg-surface: #ffffff;
+    --header-h1: #ffffff;
     --bg-column: #f4f5f7;
     --text-main: #172b4d;
     --text-muted: #5e6c84;
-    --border-color: #dfe1e6;
+    --base-border: 1px solid #dfe1e6;
     --header-bg-color: #0052cc56;
     --primary-color: #0052cc;
     --primary-hover: #0747a6;
     --accent-btn: #ffab00;
     --card-shadow: 0 4px 5px rgba(9, 30, 66, 0.9);
+    --task-btn-icon-bg: #7172732f;
+    --task-btn-icon-bg-hover: #c5c5ca;
+    --task-btn-icon-text: #172b4d;
     --modal-bg: rgba(4, 28, 44, 0.54);
     --drawer-bg: rgba(0, 0, 0, 0.7);
-
+    --metric-card-bg: #ffffff;
+    --metric-title: #5e6c84;
+    --analytics-widget-panel-bg: #f4f5f7;
+    --widget-card-bg: #ffffff;
     --badge-high-bg: #ae3c3c6f;
     --badge-high-text: rgb(206, 13, 13);
     --badge-medium-bg: #a4a41940;
@@ -28,17 +35,27 @@
     --bg-canvas: #0b0f19;
     --bg-surface: #1e293b;
     --bg-column: #111827;
+    --header-h1: #ffffff;   
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
-    --border-color: #334155;
+    --base-border: 1px solid #334155;
     --header-bg-color: #0052cc56;
     --primary-color: #3b82f6;
     --primary-hover: #2563eb;
     --accent-btn: #f59e0b;
     --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    --task-btn-icon-bg: #3b4d67;
+    --task-btn-icon-bg-hover: #68686830;
+    --task-btn-icon-text: #9ba7ba;
     --modal-bg: rgba(2, 6, 23, 0.8);
-    --drawer-bg: rgba(15, 23, 42, 0.9);
-
+    --drawer-bg: rgba(159, 177, 205, 0.943);
+    --metric-card-bg: #14305f5f;
+    --metric-title: #5e6c84;
+    --metric-value: #4d87eb;
+    --analytics-widget-panel-bg: #14305f5f;
+    --widget-card-bg: #161c29a8;
+    --widget-card-h4: #416cbc;
+    --widget-card-p: #7f8694;
     --badge-high-bg: #e19999;
     --badge-high-text: rgb(192, 16, 16);
     --badge-medium-bg: #f0f0a5;
@@ -46,7 +63,8 @@
     --tag-bg: rgb(52, 82, 97);
     --tag-text: #7dd3fc;
     --activity-text: #f8fafc;
-
+    --project-card-h3: #416cbc;
+    --project-text: #5e6c84;
 }
 
 * {
@@ -80,9 +98,18 @@ body {
     text-align: center;
 }
 
-.app-header>.header-brand>h1 {
+.app-header>.header-brand>h1>a {
     font-size: 1.08rem;
     text-align: left;
+    text-decoration: none;
+    color: var(--header-h1);
+}
+
+.app-header>.header-brand>h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
 }
 
 .navbar {
@@ -91,7 +118,7 @@ body {
 }
 
 .navbar.show {
-    display: block; 
+    display: block;
 }
 
 .navbar ul {
@@ -116,7 +143,7 @@ body {
 
 .hamburger-menu {
     position: absolute;
-    top: 1.05rem;
+    top: 0.8rem;
     right: 1rem;
     background-color: rgba(255, 0, 0, 0.244);
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
@@ -134,7 +161,7 @@ body {
 
 .app-header .header-actions {
     position: absolute;
-    top: 1.1rem;
+    top: 0.8rem;
     right: 3.2rem;
     display: flex;
     gap: 0.75rem;
@@ -144,12 +171,13 @@ body {
 
 .header-actions .new-task-btn {
     background-color: var(--accent-btn);
-    padding: 0.4rem 0.35rem;
+    padding: 0.35rem;
 }
 
 .text-short {
     display: block;
 }
+
 .text-long {
     display: none;
 }
@@ -158,13 +186,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.25rem;
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.4);
     padding: 0.25rem;
     font-weight: bold;
     border-radius: 4px;
     border: none;
     outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-small:hover,
+.btn-primary:hover {
+    transform: scale(1.07);
 }
 
 .btn-primary {
@@ -178,6 +211,7 @@ body {
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 .btn-theme-toggle {
@@ -187,11 +221,12 @@ body {
     color: #ffffff;
     outline: none;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .btn-theme-toggle:hover {
     background-color: #6b778c;
+    transform: scale(1.07);
 }
 
 .kanban-board {
@@ -212,10 +247,10 @@ body {
 }
 
 .metric-card {
-    background-color: #ffffff;
+    background-color: var(--metric-card-bg);
+    border: var(--base-border);
     padding: 1rem 1.25rem;
     border-radius: 8px;
-    border: 1px solid #dfe1e6;
     box-shadow: 0 2px 4px rgba(9, 30, 66, 0.08);
     display: flex;
     flex-direction: column;
@@ -225,7 +260,7 @@ body {
 .metric-title {
     font-size: 0.8rem;
     font-weight: 700;
-    color: #5e6c84;
+    color: var(--metric-title);
     text-transform: uppercase;
     letter-spacing: 0.03em;
 }
@@ -233,7 +268,7 @@ body {
 .metric-value {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #172b4d;
+    color: var(--metric-value);
 }
 
 .highlight-progress {
@@ -276,7 +311,7 @@ body {
     padding: 1rem;
     border-radius: 8px;
     box-shadow: var(--card-shadow);
-    border: 1px solid var(--border-color);
+    border: var(--base-border);
 }
 
 .task-card {
@@ -284,7 +319,7 @@ body {
     background-color: var(--bg-surface);
     color: var(--text-main);
     border-radius: 6px;
-    border: 1px solid var(--border-color);
+    border: var(--base-border);
     padding: 1rem;
     margin-bottom: 0.8rem;
     cursor: pointer;
@@ -299,22 +334,17 @@ body {
     position: relative;
     display: flex;
     justify-content: space-between;
-    /* Tag left, Button right */
     align-items: flex-start;
-    /* Align top */
 }
 
 .task-card-header .btn-icon {
     flex-shrink: 0;
-}
-
-.task-card-header .btn-icon {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    background: transparent;
+    background: var(--task-btn-icon-bg);
     border: none;
-    color: #172b4d;
+    color: var(--task-btn-icon-text);
     font-size: 1.2rem;
     cursor: pointer;
     padding: 0.2rem 0.5rem;
@@ -322,9 +352,7 @@ body {
 }
 
 .task-card-header .btn-icon:hover {
-    background-color: #ebecf0;
-    color: darkred;
-
+    background-color: var(--task-btn-icon-bg-hover);
 }
 
 .dropdown-menu {
@@ -564,7 +592,7 @@ body {
     padding: 0.8rem;
     margin: auto;
     border-radius: 8px;
-    border: 1px solid var(--border-color);
+    border: var(--base-border);
     box-shadow: 0 8px 16px rgba(9, 30, 66, 0.8);
     overflow-y: auto;
 }
@@ -602,14 +630,15 @@ body {
         "velocity  velocity"
         "burndown  members";
     gap: 1rem;
-    background-color: #f4f5f7;
+    background-color: var(--analytics-widget-panel-bg);
+    border: var(--base-border);
     padding: 1.25rem;
     border-radius: 8px;
-    border: 1px solid #dfe1e6;
 }
 
 .widget-card {
-    background-color: #ffffff;
+    background-color: var(--widget-card-bg);
+    border: var(--base-border);
     padding: 1rem;
     border-radius: 6px;
     box-shadow: 0 2px 4px rgba(9, 30, 66, 0.4);
@@ -617,13 +646,13 @@ body {
 
 .widget-card h4 {
     font-size: 0.9rem;
-    color: #172b4d;
+    color: var(--widget-card-h4);
     margin-bottom: 0.25rem;
 }
 
 .widget-card p {
     font-size: 0.8rem;
-    color: #5e6c84;
+    color: var(--widget-card-p);
 }
 
 .area-velocity {
@@ -668,7 +697,7 @@ body {
 .modal-form select,
 .modal-form textarea {
     padding: 0.4rem;
-    border: 1px solid var(--border-color);
+    border: var(--base-border);
     background-color: var(--bg-surface);
     color: var(--text-main);
     border-radius: 8px;
@@ -747,7 +776,8 @@ body {
 }
 
 .board-gallery-grid .project-cards {
-    background-color: #ffffff;
+    background-color: var(--bg-column);
+    border: var(--base-border);
     border-radius: 8px;
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(9, 30, 66, 0.3);
@@ -756,13 +786,13 @@ body {
 
 .board-gallery-grid .project-cards h3 {
     font-size: 1.1rem;
-    color: #172b4d;
+    color: var(--project-card-h3);
     margin-bottom: 0.5rem;
 }
 
 .board-gallery-grid .project-cards p {
     font-size: 0.9rem;
-    color: #5e6c84;
+    color: var(--project-text);
 }
 
 .board-gallery-grid .project-cards:hover {
