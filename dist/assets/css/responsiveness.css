@@ -103,6 +103,8 @@
 
     .drawer-content .timeline-item .item-details .activity-time {
         font-size: 0.95rem;
+        margin-top: 0.3rem;
+
     }
 }
 
