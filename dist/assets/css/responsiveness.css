@@ -67,7 +67,7 @@
     }
 
     .activity-drawer {
-        width: 500px;
+        width: 430px;
     }
 
     .drawer-header .drawer-title {
@@ -88,15 +88,15 @@
     }
 
     .drawer-content .timeline-item .item-details .user-name {
-        font-size: 1.3rem;
+        font-size: 1.15rem;
     }
 
     .drawer-content .timeline-item .item-details .activity-text {
-        font-size: 1.18rem;
+        font-size: 1.13rem;
     }
 
     .drawer-content .timeline-item .item-details .activity-comment {
-        font-size: 1.18rem;
+        font-size: 1.13rem;
         padding: 0.4rem;
         border-radius: 8px;
     }
@@ -187,6 +187,10 @@
     .form-actions .modal-action-btn {
         padding: 1rem;
         font-size: 1rem;
+    }
+
+    .activity-drawer {
+        width: 500px;
     }
 
     .drawer-content .timeline-item {
