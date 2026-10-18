@@ -538,27 +538,28 @@ body {
 
 .drawer-content .timeline-item .item-details .user-name {
     color: #00875a;
+    font-size: .95rem;
     font-family: 'Courier New', Courier, monospace;
     letter-spacing: normal;
 }
 
 .drawer-content .timeline-item .item-details .activity-text {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     word-wrap: break-word;
 }
 
 .drawer-content .timeline-item .item-details .activity-comment {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     background-color: #08523a7e;
     color: #00ffaa;
-    padding: 0.1rem 0.2rem;
+    padding: 0.25rem;
     width: fit-content;
     border-radius: 5px;
     margin-top: 0.2rem;
 }
 
 .drawer-content .timeline-item .item-details .activity-time {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: #0d69f4;
     padding: 0.1rem;
     width: fit-content;
