@@ -62,24 +62,81 @@ function formatTaskSumamry(taskObj) {
     return `[${formattedCategory}] ${title} (Priority: ${formattedPriority}) - Assigned to: ${assignee}`;
 }
 
-function getPriorityBadgeClass(priorityLevel) {
-    switch (priorityLevel) {
-        case "high":
-            return "badge-danger";
-        case "medium":
-            return "badge-warning";
-        case "low":
-            return "badge-success";
+function getColumnNameByStatus(statusKey) {
+    switch (statusKey) {
+        case "todo":
+            return "To Do";
+        case "in_progress":
+            return "In Progress";
+        case "review":
+            return "Review";
         default:
-            return "badge-secondary";
+            return "Backlog";
     }
 }
 
-getPriorityBadgeClass("high");
+const filterTasksByPriority = (tasksArray, targetPriority) => {
+    const filteredResults = [];
 
+    for (const task of tasksArray) {
+        if (task.priority === targetPriority) {
+            filteredResults.push(task);
+        }
+    }
+    return filteredResults;
+};
 
+const calculateBoardMetrics = (tasksArray) => {
+    let highPriorityCount = 0;
+    let completedCount = 0;
+    let activeCount = 0;
 
-export { validateTaskInput, formatTaskSumamry };
+    for (let task = 0; task < tasksArray.length; task++) {
+        const currentTask = tasksArray[task];
+
+        if (currentTask.priority === "high") {
+            highPriorityCount++;
+        }
+
+        if (currentTask.status === "done") {
+            completedCount++;
+        } else {
+            activeCount++;
+        }
+
+        return {
+            total: tasksArray.length,
+            highPriority: highPriorityCount,
+            completed: completedCount,
+            active: activeCount,
+        };
+    }
+};
+
+const searchTasksByKeyword = (taskArray, keyword) => {
+    const results = [];
+
+    const normalisedKeyword = keyword;
+
+    for (const task of taskArray) {
+        const normalisedTitle = task.title.toLowerCase();
+
+        if (normalisedTitle.includes(normalisedKeyword)) {
+            results.push(task);
+        }
+    }
+
+    return results;
+};
+
+export {
+    validateTaskInput,
+    formatTaskSumamry,
+    getColumnNameByStatus,
+    filterTasksByPriority,
+    calculateBoardMetrics,
+    searchTasksByKeyword,
+};
 
 // Test validation function immediately in console
 // const testResult = validateTaskInput(
