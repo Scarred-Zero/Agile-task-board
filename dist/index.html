@@ -10,9 +10,9 @@
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
             rel="stylesheet"
         />
-        <script src="./assets/js/script.js" defer></script>
-        <script src="./assets/js/app.js" defer></script>
-        <script src="./assets/js/test.js" defer></script>
+        <!-- <script src="./assets/js/script.js" defer></script> -->
+        <script type="module" src="./assets/js/app.js" defer></script>
+        <!-- <script src="./assets/js/test.js" defer></script> -->
     </head>
     <body>
         <header class="app-header" id="app-header">
@@ -32,7 +32,6 @@
             <div
                 class="hamburger-menu"
                 id="hamburgerMenu"
-                onclick="handleNavToggle()"
             >
                 <i class="bx bx-menu"></i>
             </div>
@@ -104,7 +103,7 @@
                         <h2>To Do</h2>
                     </header>
 
-                    <article class="task-card" onclick="openActivityLog(event)">
+                    <article class="task-card" id="task-card">
                         <div class="priority-indicator high">High</div>
                         <header class="task-card-header">
                             <span class="category-tag">Frontend</span>
@@ -398,7 +397,6 @@
                     class="btn-close"
                     aria-label="Close activity log"
                     type="button"
-                    onclick="activityCloseBtn()"
                 >
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -702,8 +700,8 @@
             >
                 <button
                     class="modal-close-btn"
+                    id="modal-close-btn"
                     aria-label="Close modal"
-                    onclick="modalCloseBtn()"
                 >
                     &times;
                 </button>
