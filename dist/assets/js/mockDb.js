@@ -1,12 +1,4 @@
-// 1. Application Constants & Initial State Configuration
-const APP_NAME = "Agile Task Board";
-const API_VERSION = "v1.0.0";
-
-// Mutable state tracking active filter and application counters
-let activeWorkspaceFilter = "all";
-let totalTasksRegistered = 2;
-
-// 2. Initial Task Data Model (Array of Objects)
+//  Initial Task Data Model (Array of Objects)
 const taskBoardDatabase = [
     {
         id: 201,
@@ -57,6 +49,13 @@ const taskBoardDatabase = [
 
 export { taskBoardDatabase };
 
+// 1. Application Constants & Initial State Configuration
+const APP_NAME = "Agile Task Board";
+const API_VERSION = "v1.0.0";
+
+// Mutable state tracking active filter and application counters
+let activeWorkspaceFilter = "all";
+let totalTasksRegistered = 2;
 // 3. Diagnostic Initialization Logging using Console Tools
 // console.group(
 //     `%c🚀 ${APP_NAME} Initialized (${API_VERSION})`,

@@ -8,11 +8,11 @@ import {
 } from "./script.js";
 
 import {
-    validateTaskInput,
     filterTasksByPriority,
     calculateBoardMetrics,
     getColumnNameByStatus,
-    searchTasksByKeyword
+    searchTasksByKeyword,
+    getCategoryTaskCounts
 } from "./utility.js";
 
 import { taskBoardDatabase } from "./mockDb.js";
@@ -25,29 +25,6 @@ openActivityLog();
 handleNavToggle();
 modalBackdropClose();
 
-function createNewTaskObj(title, category, priority, desc, assignee, status) {
-    const generateID = Date.now();
-    const validationCheck = validateTaskInput(
-        title,
-        category,
-        priority,
-        desc,
-        assignee,
-        status,
-    );
-    console.log(
-        "%c✓ Task Validation Passed Successfully!",
-        "color: #10b981; font-weight: bold;",
-    );
-    const newTask = {
-        id: generateID,
-        title: title,
-        category: category,
-        priority: priority,
-        desc: desc,
-    };
-    console.table(newTask);
-}
 
 createNewTaskObj(taskBoardDatabase[2]);
 
@@ -71,3 +48,4 @@ console.groupEnd();
 
 
 console.table(searchTasksByKeyword(taskBoardDatabase, "schema"));
+console.table(getCategoryTaskCounts(taskBoardDatabase));

@@ -1,5 +1,39 @@
+function createNewTaskObj(title, category, priority, desc, assignee, status) {
+    const generateID = Date.now();
+
+    // FIX: Aligned arguments to match the parameter definition of validateTaskInput below
+    const validationCheck = validateTaskInput(
+        title,
+        desc,
+        category,
+        priority,
+        assignee,
+        status,
+    );
+
+    if (!validationCheck) {
+        console.error("❌ Task creation halted due to validation failure.");
+        return;
+    }
+
+    console.log(
+        "%c✓ Task Validation Passed Successfully!",
+        "color: #10b981; font-weight: bold;",
+    );
+
+    const newTask = {
+        id: generateID,
+        title: title,
+        category: category,
+        priority: priority,
+        desc: desc,
+        assignee: assignee,
+        status: status,
+    };
+    console.table(newTask);
+}
+
 function validateTaskInput(title, desc, category, priority, assignee, status) {
-    // Use strict inequality and data type checks
     if (typeof title !== "string" || title.trim().length === 0) {
         console.error(
             "Validation Error: Task title must be a non-empty string.",
@@ -24,29 +58,30 @@ function validateTaskInput(title, desc, category, priority, assignee, status) {
     }
 
     if (typeof desc !== "string" || desc.trim().length === 0) {
+        console.error("Validation Error: The description cannot be empty.");
+        return false;
+    }
+
+    // FIX: Added missing 'typeof' operator for string evaluation
+    if (typeof assignee !== "string" || assignee.trim().length < 3) {
         console.error(
-            "Validation Error: The description cannot be a number/symbol and cannot be empty",
+            "Validation Error: Assignee must be a valid string of at least 3 characters.",
         );
         return false;
     }
 
-    if (assignee !== "string" || assignee.trim().length < 3) {
-        console.error(
-            "Validation Error: Assignne cannot be a non-empty string or less than 3 characters",
-        );
-        return false;
-    }
-
-    const validStatus = ["todo", "inProgress", "completed"];
+    const validStatus = [
+        "todo",
+        "in_progress",
+        "done",
+        "inProgress",
+        "completed",
+    ];
     if (!validStatus.includes(status)) {
         console.error(`Validation Error: Invalid status '${status}'.`);
         return false;
     }
 
-    // console.log(
-    //     "%c✓ Task Validation Passed Successfully!",
-    //     "color: #10b981; font-weight: bold;",
-    // );
     return true;
 }
 
@@ -129,13 +164,55 @@ const searchTasksByKeyword = (taskArray, keyword) => {
     return results;
 };
 
+const getCategoryTaskCounts = (tasksArray) => {
+    const frontendCategory = [];
+    const backendCategory = [];
+    const databaseCategory = [];
+    const devopsCategory = [];
+
+    for (const task of tasksArray) {
+        const normalisedCategory = task.category.toLowerCase();
+        switch (normalisedCategory) {
+            case "frontend":
+                frontendCategory.push(task);
+                break;
+            case "backend":
+                backendCategory.push(task);
+                break;
+            case "database":
+                databaseCategory.push(task);
+                break;
+            case "devops":
+                devopsCategory.push(task);
+                break;
+            default:
+                console.log(
+                    "The category " +
+                        `'${normalisedCategory}'` +
+                        " does not match any category.",
+                );
+                break;
+        }
+    }
+
+    const categoryObj = {
+        frontend: frontendCategory.length,
+        backend: backendCategory.length,
+        database: databaseCategory.length,
+        devops: devopsCategory.length,
+    };
+    return categoryObj;
+};
+
 export {
+    createNewTaskObj,
     validateTaskInput,
     formatTaskSumamry,
     getColumnNameByStatus,
     filterTasksByPriority,
     calculateBoardMetrics,
     searchTasksByKeyword,
+    getCategoryTaskCounts,
 };
 
 // Test validation function immediately in console
