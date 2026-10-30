@@ -1,87 +1,54 @@
-function victoryZoe(params) {
-    // console.log("Visctory is awake, While Zoe is not")
-}
+const kanbanTaskManager = {
+  boardName: "Sprint 14 Core Board",
+  tasks: [
+    { id: 301, title: "Design PostgreSQL ERD", category: "database", priority: "high", status: "todo" },
+    { id: 302, title: "Build FastAPI Endpoints", category: "backend", priority: "medium", status: "in_progress" }
+  ],
 
-victoryZoe();
+  // Method to add a new task object to the array (Mutation: push)
+  addNewTask(title, category, priority, status = "todo") {
+    const newTask = {
+      id: Date.now(), // Unique numeric timestamp ID
+      title: title.trim(),
+      category: category,
+      priority: priority,
+      status: status
+    };
 
-// Sring interpolation
-//  const x = 5;
-//  const y = 3;
-//  console.log("x:", x)
-//  console.log(`${x} is greater than ${y}`)
-//  console.log(x + " " + "is greater than" + " " + y);
+    this.tasks.push(newTask);
+    console.log(`%c[Success] Task added: "${newTask.title}"`, "color: #10b981; font-weight: bold;");
+    this.syncToStorage();
+    return newTask;
+  },
 
-// const fname = "Victory";
-// const lname = "Zoe";
-// console.log(fname + " is shorter than " + lname)
-// console.log(`Result of ${x} and ${y} is: `, x + y)
+  // Method to delete a task by ID using array searching and splice mutation
+  deleteTaskById(taskId) {
+    const index = this.tasks.findIndex(task => task.id === taskId);
+    
+    if (index !== -1) {
+      const removedTask = this.tasks.splice(index, 1)[0];
+      console.log(`%c[Deleted] Task removed: "${removedTask.title}"`, "color: #ef4444; font-weight: bold;");
+      this.syncToStorage();
+      return true;
+    }
+    
+    console.warn(`[Warning] Task ID ${taskId} not found for deletion.`);
+    return false;
+  },
 
-// If Statements
-const x = 5;
-const y = 5;
-// if (x > y) {
-//     console.log("It is greater");
-// } else if (x === y) {
-//     console.log("They are equal")
-// } else {
-//     console.log("It is not");
-// }
+  // Method to serialize state to JSON string and save to localStorage simulation
+  syncToStorage() {
+    const serializedData = JSON.stringify(this.tasks);
+    localStorage.setItem("kanban_tasks_backup", serializedData);
+    console.log("%c[Storage] Board state serialized and synchronized.", "color: #2563eb;");
+  },
 
-// For Loop
-// const nums = [1, 2, 3, 4, 5, 6];
-// let total = 0;
-
-// for (let i = 0; i < nums.length; i++) {
-//     total += nums[i];
-// }
-// console.log(total);
-
-// const nums = [1, 2, 3, 4, 5, 6];
-// let total = 0;
-// for (const num of nums) {
-//     total += num;
-// }
-// console.log(total);
-
-
-// let y = 0;
-// y++;
-// while (y < 5) {
-//     console.log("It is smaller");
-//     break;
-// }
-
-// Traditional functions
-function calculate(a, b) {
-    return a + b;
-}
-
-console.log(calculate(5, 5));
-
-// Arrow functions
-const calculate = (a, b) => a + b;
-console.log(calculate(5, 8))
-
-let sentence = "Victory"
-let sentence2 = "  Vi  "
-// sentence2.trim()
-// console.log("Length: ", sentence.length)
-// console.log("Length: ", sentence2.length)
-
-
-
-// function showAppropriateWeatherInfo(weather) {
-//     switch (weather) {
-//         case "rainny":
-//             console.log("Don't forget to use your umbrella");
-//             break;
-//         case "sunny":
-//             console.log("Wear your shades");
-//             break;
-//         default:
-//             console.log("Go about your day");
-//             break;
-//     }
-// }
-
-// showAppropriateWeatherInfo("Thunderstorm with hail");
+  // Method to load and deserialize state from JSON storage
+  loadFromStorage() {
+    const rawData = localStorage.getItem("kanban_tasks_backup");
+    if (rawData) {
+      this.tasks = JSON.parse(rawData);
+      console.log("%c[Storage] Board state restored from JSON payload.", "color: #8b5cf6; font-weight: bold;");
+    }
+  }
+};

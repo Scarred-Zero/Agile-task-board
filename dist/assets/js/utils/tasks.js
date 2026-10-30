@@ -1,12 +1,15 @@
+import { syncToStorage, taskBoardDatabase } from "../mockDb.js";
+import { validateTaskInput } from "./validation.js";
+
 function createNewTaskObj(title, category, priority, desc, assignee, status) {
     const generateID = Date.now();
 
     // FIX: Aligned arguments to match the parameter definition of validateTaskInput below
     const validationCheck = validateTaskInput(
         title,
-        desc,
         category,
         priority,
+        desc,
         assignee,
         status,
     );
@@ -30,59 +33,10 @@ function createNewTaskObj(title, category, priority, desc, assignee, status) {
         assignee: assignee,
         status: status,
     };
-    console.table(newTask);
-}
 
-function validateTaskInput(title, desc, category, priority, assignee, status) {
-    if (typeof title !== "string" || title.trim().length === 0) {
-        console.error(
-            "Validation Error: Task title must be a non-empty string.",
-        );
-        return false;
-    }
-
-    if (title.trim().length < 3) {
-        console.warn("Validation Warning: Task title is extremely short.");
-    }
-
-    const validCategories = ["frontend", "backend", "database", "devops"];
-    if (!validCategories.includes(category)) {
-        console.error(`Validation Error: Invalid category '${category}'.`);
-        return false;
-    }
-
-    const validPriorities = ["low", "medium", "high"];
-    if (!validPriorities.includes(priority)) {
-        console.error(`Validation Error: Invalid priority '${priority}'.`);
-        return false;
-    }
-
-    if (typeof desc !== "string" || desc.trim().length === 0) {
-        console.error("Validation Error: The description cannot be empty.");
-        return false;
-    }
-
-    // FIX: Added missing 'typeof' operator for string evaluation
-    if (typeof assignee !== "string" || assignee.trim().length < 3) {
-        console.error(
-            "Validation Error: Assignee must be a valid string of at least 3 characters.",
-        );
-        return false;
-    }
-
-    const validStatus = [
-        "todo",
-        "in_progress",
-        "done",
-        "inProgress",
-        "completed",
-    ];
-    if (!validStatus.includes(status)) {
-        console.error(`Validation Error: Invalid status '${status}'.`);
-        return false;
-    }
-
-    return true;
+    taskBoardDatabase.push(newTask);
+    syncToStorage();
+    return newTask;
 }
 
 function formatTaskSumamry(taskObj) {
@@ -119,33 +73,6 @@ const filterTasksByPriority = (tasksArray, targetPriority) => {
         }
     }
     return filteredResults;
-};
-
-const calculateBoardMetrics = (tasksArray) => {
-    let highPriorityCount = 0;
-    let completedCount = 0;
-    let activeCount = 0;
-
-    for (let task = 0; task < tasksArray.length; task++) {
-        const currentTask = tasksArray[task];
-
-        if (currentTask.priority === "high") {
-            highPriorityCount++;
-        }
-
-        if (currentTask.status === "done") {
-            completedCount++;
-        } else {
-            activeCount++;
-        }
-
-        return {
-            total: tasksArray.length,
-            highPriority: highPriorityCount,
-            completed: completedCount,
-            active: activeCount,
-        };
-    }
 };
 
 const searchTasksByKeyword = (taskArray, keyword) => {
@@ -204,25 +131,28 @@ const getCategoryTaskCounts = (tasksArray) => {
     return categoryObj;
 };
 
+function deleteTaskById(taskId) {
+    const index = taskBoardDatabase.findIndex((task) => task.id === taskId);
+    if (index !== -1) {
+        const removedTask = taskBoardDatabase.splice(index, 1)[0];
+        console.log(
+            `%c[Deleted] Task removed: "${removedTask.title}"`,
+            "color: #ef4444; font-weight: bold;",
+        );
+        syncToStorage();
+        return true;
+    }
+
+    console.warn(`[Warning] Task ID ${taskId} not found for deletion.`);
+    return false;
+}
+
 export {
     createNewTaskObj,
-    validateTaskInput,
     formatTaskSumamry,
     getColumnNameByStatus,
     filterTasksByPriority,
-    calculateBoardMetrics,
     searchTasksByKeyword,
     getCategoryTaskCounts,
+    deleteTaskById
 };
-
-// Test validation function immediately in console
-// const testResult = validateTaskInput(
-//     "Setup PostgreSQL DB",
-//     "database",
-//     "high",
-//     "askbfhasdvjksdfbjkvbsbvskbvskvskvhksbv hkxsbvh jfgjsgvsjh mbcsbvjhvbs msbdvjhsfbjhbvsfjhbv  nfbjvdfjhbv",
-// );
-// console.log(`Test Validation Result: ${testResult}`);
-
-// const summary = formatTaskSumamry(initialTasksDatabase[2]);
-// console.log("summary:", summary);

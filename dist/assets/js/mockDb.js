@@ -47,7 +47,49 @@ const taskBoardDatabase = [
     },
 ];
 
-export { taskBoardDatabase };
+// Method to serialize state to JSON string and save to localStorage simulation
+function syncToStorage() {
+    const serialisedData = JSON.stringify(taskBoardDatabase);
+    localStorage.setItem("kanban_tasks_backup", serialisedData);
+    console.log(
+        "%c[Storage] Board state serialized and synchronized.",
+        "color: #2563eb;",
+    );
+}
+
+// Method to load and deserialize state from JSON storage
+function loadFromStorage() {
+    const rawData = localStorage.getItem("kanban_tasks_backup");
+    if (rawData) {
+        taskBoardDatabase = JSON.parse(rawData);
+        console.log(
+            "%c[Storage] Board state restored from JSON payload.",
+            "color: #8b5cf6; font-weight: bold;",
+        );
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export { taskBoardDatabase, syncToStorage, loadFromStorage };
 
 // 1. Application Constants & Initial State Configuration
 const APP_NAME = "Agile Task Board";
