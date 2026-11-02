@@ -72,17 +72,21 @@ createNewTaskObj(
 // console.table(getCategoryTaskCounts(taskBoardDatabase));
 
 // Test Update Task Status
-// const taskIdToUpdate = 205;
-// const newStatus = "in_progress";
-// const updateResult = updateTaskStatus(taskIdToUpdate, newStatus);
-// if (updateResult) {
-//     console.log(
-//         `%c[Success] Task ID ${taskIdToUpdate} status updated to "${newStatus}".`,
-//         "color: #10b981; font-weight: bold;",
-//     );
-// }
-// console.log(taskBoardDatabase);
+console.log(taskBoardDatabase);
+const taskIdToUpdate = 201;
+const newStatus = "in_progress";
+const updateResult = updateTaskStatus(taskIdToUpdate, newStatus);
+if (updateResult) {
+    console.log(
+        `%c[Success] Task ID ${taskIdToUpdate} status updated to "${newStatus}".`,
+        "color: #10b981; font-weight: bold;",
+    );
+}
+console.log(taskBoardDatabase);
 
 // Test the exportTasksByCategory function
-// const categoryToExport = "database";
-// const exportedCategoryJson = console.log(exportTasksByCategory(categoryToExport));
+const categoryToExport = "database";
+const exportedCategoryJson = console.log(exportTasksByCategory(categoryToExport));
+
+
+// 

@@ -92,21 +92,22 @@ const searchTasksByKeyword = (taskArray, keyword) => {
 };
 
 const updateTaskStatus = (taskId, newStatus) => {
-    const taskIndex = taskBoardDatabase.findIndex((task) => task.id === taskId);
+    const taskIndex = taskBoardDatabase.findIndex((task) => task.id === taskId)
     if (taskIndex !== -1) {
+        // If found, update its status property to newStatus
         taskBoardDatabase[taskIndex].status = newStatus;
+        // Call this.syncToStorage(). 
         syncToStorage();
         return true;
     }
-    console.error(`[Error] Task ID ${taskId} not found for status update.`);
-    return false;
 };
+
 
 const exportTasksByCategory = (categoryName) => {
     const normalisedCategory = categoryName.toLowerCase();
-    const filteredTasks = taskBoardDatabase.filter(
-        (task) => task.category.toLowerCase() === normalisedCategory,
-    );
+    // The function must filter all tasks matching the specified category
+    const filteredTasks = taskBoardDatabase.filter(task => task.category.toLowerCase() === normalisedCategory);
+    // and return a pretty-printed JSON string (using `JSON.stringify(filteredArray, null, 2)`).
     const jsonString = JSON.stringify(filteredTasks, null, 2);
     return jsonString;
 }
