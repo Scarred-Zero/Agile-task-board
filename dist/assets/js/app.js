@@ -12,7 +12,9 @@ import {
     getColumnNameByStatus,
     searchTasksByKeyword,
     getCategoryTaskCounts,
-    createNewTaskObj
+    createNewTaskObj,
+    exportTasksByCategory,
+    updateTaskStatus
 } from "./utils/tasks.js";
 
 import { calculateBoardMetrics } from "./utils/calc.js";
@@ -41,12 +43,12 @@ createNewTaskObj(
     "todo",
 );
 
-console.table(taskBoardDatabase);
+// console.table(taskBoardDatabase);
 
-const exportedJsonPayload = JSON.stringify(taskBoardDatabase, null, 2);
-console.log("Exported JSON Payload String:\n", exportedJsonPayload);
+// const exportedJsonPayload = JSON.stringify(taskBoardDatabase, null, 2);
+// console.log("Exported JSON Payload String:\n", exportedJsonPayload);
 
-console.groupEnd();
+// console.groupEnd();
 
 // console.group(
 //     "%c📊 Agile Task Board - Logic Execution Report",
@@ -68,3 +70,19 @@ console.groupEnd();
 
 // console.table(searchTasksByKeyword(taskBoardDatabase, "schema"));
 // console.table(getCategoryTaskCounts(taskBoardDatabase));
+
+// Test Update Task Status
+// const taskIdToUpdate = 205;
+// const newStatus = "in_progress";
+// const updateResult = updateTaskStatus(taskIdToUpdate, newStatus);
+// if (updateResult) {
+//     console.log(
+//         `%c[Success] Task ID ${taskIdToUpdate} status updated to "${newStatus}".`,
+//         "color: #10b981; font-weight: bold;",
+//     );
+// }
+// console.log(taskBoardDatabase);
+
+// Test the exportTasksByCategory function
+// const categoryToExport = "database";
+// const exportedCategoryJson = console.log(exportTasksByCategory(categoryToExport));

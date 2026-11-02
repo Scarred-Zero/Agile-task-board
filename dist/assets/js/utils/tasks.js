@@ -91,6 +91,26 @@ const searchTasksByKeyword = (taskArray, keyword) => {
     return results;
 };
 
+const updateTaskStatus = (taskId, newStatus) => {
+    const taskIndex = taskBoardDatabase.findIndex((task) => task.id === taskId);
+    if (taskIndex !== -1) {
+        taskBoardDatabase[taskIndex].status = newStatus;
+        syncToStorage();
+        return true;
+    }
+    console.error(`[Error] Task ID ${taskId} not found for status update.`);
+    return false;
+};
+
+const exportTasksByCategory = (categoryName) => {
+    const normalisedCategory = categoryName.toLowerCase();
+    const filteredTasks = taskBoardDatabase.filter(
+        (task) => task.category.toLowerCase() === normalisedCategory,
+    );
+    const jsonString = JSON.stringify(filteredTasks, null, 2);
+    return jsonString;
+}
+
 const getCategoryTaskCounts = (tasksArray) => {
     const frontendCategory = [];
     const backendCategory = [];
@@ -148,11 +168,13 @@ function deleteTaskById(taskId) {
 }
 
 export {
+    searchTasksByKeyword,
     createNewTaskObj,
     formatTaskSumamry,
     getColumnNameByStatus,
     filterTasksByPriority,
-    searchTasksByKeyword,
+    updateTaskStatus,
+    exportTasksByCategory,
     getCategoryTaskCounts,
     deleteTaskById
 };
