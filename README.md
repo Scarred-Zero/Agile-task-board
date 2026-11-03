@@ -11,21 +11,28 @@ A responsive task board interface built with HTML, CSS, and JavaScript.
 
 ## Getting Started
 
-No build step or package installation is required.
+`dist/` is the canonical application source and the directory deployed by
+Netlify. This project has no separate build output or build step.
 
 1. Clone or download this repository.
-2. Open `assets/html/index.html` in a browser.
+2. Serve `dist/index.html` over HTTP. ES modules require an HTTP server; in
+   VS Code, open `dist/index.html` with the Live Server extension.
 
-For local development, open the project in Visual Studio Code and run the
-`assets/html/index.html` file with the Live Server extension. The project
-configures Live Server to use port `5501`.
+Run the dependency-free Node.js checks from the repository root with
+`npm test`.
 
 ## Project Structure
 
-```text
-assets/
-  css/       Stylesheets
-  html/      Task board page
-  img/       Placeholder avatars
-  js/        JavaScript
+```Agile-task-board
+dist/
+  index.html
+  assets/
+    css/     Stylesheets
+    img/     Placeholder avatars
+    js/
+      app.js
+      database/
+      dom/
+      utils/
+tests/       Node.js tests
 ```

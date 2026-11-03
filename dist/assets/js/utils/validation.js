@@ -1,4 +1,9 @@
 function validateTaskInput(title, category, priority, desc, assignee, status) {
+    const VALID_CATEGORIES = ["frontend", "backend", "database", "devops"];
+    const VALID_PRIORITIES = ["low", "medium", "high"];
+    const VALID_STATUS = ["todo", "in_progress", "review", "done"];
+
+
     if (typeof title !== "string" || title.trim().length === 0) {
         console.error(
             "Validation Error: Task title must be a non-empty string.",
@@ -10,14 +15,12 @@ function validateTaskInput(title, category, priority, desc, assignee, status) {
         console.warn("Validation Warning: Task title is extremely short.");
     }
 
-    const validCategories = ["frontend", "backend", "database", "devops"];
-    if (!validCategories.includes(category)) {
+    if (!VALID_CATEGORIES.includes(category)) {
         console.error(`Validation Error: Invalid category '${category}'.`);
         return false;
     }
 
-    const validPriorities = ["low", "medium", "high"];
-    if (!validPriorities.includes(priority)) {
+    if (!VALID_PRIORITIES.includes(priority)) {
         console.error(`Validation Error: Invalid priority '${priority}'.`);
         return false;
     }
@@ -35,14 +38,7 @@ function validateTaskInput(title, category, priority, desc, assignee, status) {
         return false;
     }
 
-    const validStatus = [
-        "todo",
-        "in_progress",
-        "done",
-        "inProgress",
-        "completed",
-    ];
-    if (!validStatus.includes(status)) {
+    if (!VALID_STATUS.includes(status)) {
         console.error(`Validation Error: Invalid status '${status}'.`);
         return false;
     }
