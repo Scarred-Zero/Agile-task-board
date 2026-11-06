@@ -1,49 +1,65 @@
 import { calculateBoardMetrics } from "../utils/calc.js";
 
-const BOARD_COLUMNS = [
-    { status: "todo", title: "To Do", elementId: "todo-task-cards" },
-    {
-        status: "in_progress",
-        title: "In Progress",
-        elementId: "inProgress-task-cards",
-    },
-    { status: "review", title: "Review", elementId: "review-task-cards" },
-    { status: "done", title: "Done", elementId: "done-task-cards" },
-];
+// const BOARD_COLUMNS = [
+//     { status: "todo", title: "To Do", elementId: "todo-task-cards" },
+//     {
+//         status: "in_progress",
+//         title: "In Progress",
+//         elementId: "inProgress-task-cards",
+//     },
+//     { status: "review", title: "Review", elementId: "review-task-cards" },
+//     { status: "done", title: "Done", elementId: "done-task-cards" },
+// ];
 
-const escapeHtml = (value) =>
-    String(value).replace(/[&<>"']/g, (character) => {
-        const entities = {
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;",
-        };
-        return entities[character];
-    });
+function createTaskCardElement(task) {
+    const card = document.createElement("article");
+    card.className = ".task-card";
+    card.dataset.id = task.id;
 
-const renderTaskCardTemplate = (task) => `
-    <article
-        class="task-card"
-        id="task-card-${escapeHtml(task.id)}"
-        data-id="${escapeHtml(task.id)}"
-        tabindex="0"
-        role="button"
-        aria-label="Open activity for ${escapeHtml(task.title)}"
-    >
-        <div class="priority-indicator ${escapeHtml(task.priority)}">${escapeHtml(task.priority)}</div>
-        <header class="task-card-header">
-            <span class="category-tag">${escapeHtml(task.category)}</span>
-        </header>
-        <h3 class="task-title">${escapeHtml(task.title)}</h3>
-        <p class="task-list">${escapeHtml(task.desc)}</p>
-        <footer class="task-card-footer">
-            <span class="task-assignee"><strong>Assignee: </strong>${escapeHtml(task.assignee)}</span>
-            <span class="task-point"><strong>Points: </strong>${escapeHtml(task.point ?? 0)}</span>
-        </footer>
-    </article>
-`;
+    const priorityIndicator = document.createElement("div");
+    priorityIndicator.className = `priority-indicator ${task.priority.toLowerCase()}`;
+    priorityIndicator.textContent = task.priority.toUpperCase();
+
+    const header = document.createElement("h1");
+    header.className = "task-card-header";
+
+    const span = document.createElement("span");
+    span.className = "category-tag";
+    span.textContent = `${task.category.toLowerCase()}`;
+
+    const optionsBtn = document.createElement("button");
+    optionsBtn.className = "btn-icon";
+    optionsBtn.setAttribute("aria-label", "Task options");
+    optionsBtn.textContent = "⋮";
+
+    header.appendChild(span);
+    header.appendChild(optionsBtn);
+
+    const titleHeading = document.createElement("h3");
+    titleHeading.className = "task-title";
+    titleHeading.textContent = task.title;
+
+    const taskDesc = document.createElement("p");
+    taskDesc.className = "task-desc";
+    taskDesc.textContent = task.desc;
+
+    const footer = document.createElement("footer");
+    footer.className = "task-card-footer";
+
+    const assigneeSpan = document.createElement("span");
+    assigneeSpan.className = "task-assignee";
+    assigneeSpan.textContent = `Assignee: ${task.assignee ? task.assignee : "Unassigned"}`;
+
+    footer.appendChild(assigneeSpan);
+
+    card.appendChild(priorityIndicator);
+    card.appendChild(header);
+    card.appendChild(titleHeading);
+    card.appendChild(taskDesc);
+    card.appendChild(footer);
+
+    return card;
+}
 
 function renderBoard(tasks, documentRef = document) {
     for (const column of BOARD_COLUMNS) {
@@ -52,7 +68,9 @@ function renderBoard(tasks, documentRef = document) {
             throw new Error(`Missing board column: ${column.elementId}`);
         }
 
-        const columnTasks = tasks.filter((task) => task.status === column.status);
+        const columnTasks = tasks.filter(
+            (task) => task.status === column.status,
+        );
         const cards = columnTasks.map(renderTaskCardTemplate).join("");
         element.innerHTML = `
             <header class="column-header"><h2>${column.title}</h2></header>
@@ -113,26 +131,36 @@ function initializeUI(documentRef = document) {
         }
     });
 
-    documentRef.getElementById("hamburgerMenu")?.addEventListener("click", () => {
-        documentRef.getElementById("navbar")?.classList.toggle("show");
-    });
+    documentRef
+        .getElementById("hamburgerMenu")
+        ?.addEventListener("click", () => {
+            documentRef.getElementById("navbar")?.classList.toggle("show");
+        });
 
     const closeModal = () => {
         if (modal) modal.style.display = "none";
     };
-    documentRef.getElementById("open-modal-btn")?.addEventListener("click", () => {
-        if (modal) modal.style.display = "flex";
-    });
-    documentRef.getElementById("modal-close-btn")?.addEventListener("click", closeModal);
-    documentRef.getElementById("modal-cancel")?.addEventListener("click", closeModal);
+    documentRef
+        .getElementById("open-modal-btn")
+        ?.addEventListener("click", () => {
+            if (modal) modal.style.display = "flex";
+        });
+    documentRef
+        .getElementById("modal-close-btn")
+        ?.addEventListener("click", closeModal);
+    documentRef
+        .getElementById("modal-cancel")
+        ?.addEventListener("click", closeModal);
     modal?.addEventListener("click", (event) => {
         if (event.target === modal) closeModal();
     });
 
-    documentRef.getElementById("drawer-btn-close")?.addEventListener("click", () => {
-        activityDrawer?.classList.remove("is-open");
-        activityDrawer?.setAttribute("aria-hidden", "true");
-    });
+    documentRef
+        .getElementById("drawer-btn-close")
+        ?.addEventListener("click", () => {
+            activityDrawer?.classList.remove("is-open");
+            activityDrawer?.setAttribute("aria-hidden", "true");
+        });
 
     board?.addEventListener("click", (event) => {
         const card = event.target.closest(".task-card");
@@ -186,7 +214,8 @@ function initializeTaskBoard({ getTasks, createTask }, documentRef = document) {
 
             if (!task) {
                 if (errorMessage) {
-                    errorMessage.textContent = "Please enter valid task details.";
+                    errorMessage.textContent =
+                        "Please enter valid task details.";
                 }
                 return;
             }
@@ -201,11 +230,40 @@ function initializeTaskBoard({ getTasks, createTask }, documentRef = document) {
     return board;
 }
 
+function renderBoardColumns(tasks) {
+    const statuses = ["todo", "in_progress", "review", "done"];
+
+    statuses.forEach((stat) => {
+        const columnContainer = document.querySelector(
+            `#${stat.toLowerCase()}-task-cards`,
+        );
+
+        if (!columnContainer) {
+            // NOT Operator
+            console.warn(
+                `Render warning: Column container for status '${stat}' not found.`,
+            );
+            return;
+        }
+
+        const matchingTasks = tasks.filter((task) => task.status.toLowerCase() === stat.toLowerCase());
+
+        const fragment = document.createDocumentFragment();
+
+        matchingTasks.forEach((task) => {
+            const cardElement = createTaskCardElement(task);
+            fragment.appendChild(cardElement);
+        });
+
+        // Reset container contents safely and append fragment
+        columnContainer.replaceChildren(fragment);
+    });
+}
+
 export {
-    BOARD_COLUMNS,
+    createTaskCardElement,
     initializeTaskBoard,
     initializeUI,
     renderBoard,
-    renderTaskCardTemplate,
     themeInitialiser,
 };

@@ -2,6 +2,7 @@ import { getTasks, loadFromStorage } from "./database/mockDb.js";
 import {
     initializeTaskBoard,
     initializeUI,
+    
 } from "./dom/script.js";
 import { createNewTaskObj } from "./utils/tasks.js";
 

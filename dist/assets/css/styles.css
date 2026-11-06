@@ -283,7 +283,7 @@ body {
     color: #00875a;
 }
 
-.task-list {
+.task-desc {
     flex-grow: 1;
     overflow-y: auto;
     padding: 0.5rem;
