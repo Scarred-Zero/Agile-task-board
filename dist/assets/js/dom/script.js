@@ -1,19 +1,141 @@
 import { calculateBoardMetrics } from "../utils/calc.js";
 
-// const BOARD_COLUMNS = [
-//     { status: "todo", title: "To Do", elementId: "todo-task-cards" },
-//     {
-//         status: "in_progress",
-//         title: "In Progress",
-//         elementId: "inProgress-task-cards",
-//     },
-//     { status: "review", title: "Review", elementId: "review-task-cards" },
-//     { status: "done", title: "Done", elementId: "done-task-cards" },
-// ];
+function themeInitialiser(documentRef = document) {
+    const root = documentRef.documentElement;
+    try {
+        if (localStorage.getItem("theme") === "dark") {
+            root.setAttribute("data-theme", "dark");
+        }
+    } catch (error) {
+        console.error("[Theme] Unable to restore the saved theme.", error);
+    }
+}
+
+function initializeUI(documentRef = document) {
+    const htmlRoot = documentRef.documentElement;
+    const themeToggle = documentRef.querySelector("#theme-toggle-btn");
+    const activityDrawer = documentRef.querySelector("#activity-drawer");
+    const modal = documentRef.querySelector("#task-modal");
+    const board = documentRef.querySelector(".board-columns-container");
+
+    themeInitialiser(documentRef);
+
+    themeToggle?.addEventListener("click", () => {
+        const isDark = htmlRoot.getAttribute("data-theme") === "dark";
+        if (isDark) {
+            htmlRoot.removeAttribute("data-theme");
+        } else {
+            htmlRoot.setAttribute("data-theme", "dark");
+        }
+        try {
+            localStorage.setItem("theme", isDark ? "light" : "dark");
+        } catch (error) {
+            console.error("[Theme] Unable to save the selected theme.", error);
+        }
+    });
+
+    documentRef
+        .querySelector("#hamburgerMenu")
+        ?.addEventListener("click", () => {
+            documentRef.querySelector("#navbar")?.classList.toggle("show");
+        });
+
+    const closeModal = () => {
+        if (modal) modal.style.display = "none";
+    };
+    documentRef
+        .querySelector("#open-modal-btn")
+        ?.addEventListener("click", () => {
+            if (modal) modal.style.display = "flex";
+        });
+    documentRef
+        .querySelector("#modal-close-btn")
+        ?.addEventListener("click", closeModal);
+    documentRef
+        .querySelector("#modal-cancel")
+        ?.addEventListener("click", closeModal);
+    modal?.addEventListener("click", (event) => {
+        if (event.target === modal) closeModal();
+    });
+
+    documentRef
+        .querySelector("#drawer-btn-close")
+        ?.addEventListener("click", () => {
+            activityDrawer?.classList.remove("is-open");
+            activityDrawer?.setAttribute("aria-hidden", "true");
+        });
+
+    board?.addEventListener("click", (event) => {
+        const card = event.target.closest(".task-card");
+        if (!card || !board.contains(card)) return;
+        activityDrawer?.classList.add("is-open");
+        activityDrawer?.setAttribute("aria-hidden", "false");
+    });
+
+    board?.addEventListener("keydown", (event) => {
+        if (
+            (event.key === "Enter" || event.key === " ") &&
+            event.target.matches(".task-card")
+        ) {
+            event.preventDefault();
+            activityDrawer?.classList.add("is-open");
+            activityDrawer?.setAttribute("aria-hidden", "false");
+        }
+    });
+
+    documentRef.addEventListener("click", (event) => {
+        if (
+            activityDrawer?.classList.contains("is-open") &&
+            !activityDrawer.contains(event.target) &&
+            !board?.contains(event.target)
+        ) {
+            activityDrawer.classList.remove("is-open");
+            activityDrawer.setAttribute("aria-hidden", "true");
+        }
+    });
+}
+
+function initializeTaskBoard({ getTasks, createTask }, documentRef = document) {
+    const board = documentRef.querySelector(".board-columns-container");
+    const form = documentRef.querySelector("#task-form");
+    const errorMessage = documentRef.querySelector("#task-form-error");
+
+    renderBoard(getTasks(), documentRef);
+
+    if (form) {
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const task = createTask({
+                title: formData.get("title"),
+                category: formData.get("category"),
+                priority: formData.get("priority"),
+                desc: formData.get("description"),
+                assignee: "Unassigned",
+                status: "todo",
+            });
+
+            if (!task) {
+                if (errorMessage) {
+                    errorMessage.textContent =
+                        "Please enter valid task details.";
+                }
+                return;
+            }
+
+            if (errorMessage) errorMessage.textContent = "";
+            form.reset();
+            documentRef.querySelector(".task-modal").style.display = "none";
+            renderBoard(getTasks(), documentRef);
+        });
+    }
+
+    return board;
+}
 
 function createTaskCardElement(task) {
     const card = document.createElement("article");
-    card.className = ".task-card";
+    card.className = "task-card";
     card.dataset.id = task.id;
 
     const priorityIndicator = document.createElement("div");
@@ -61,175 +183,6 @@ function createTaskCardElement(task) {
     return card;
 }
 
-function renderBoard(tasks, documentRef = document) {
-    for (const column of BOARD_COLUMNS) {
-        const element = documentRef.getElementById(column.elementId);
-        if (!element) {
-            throw new Error(`Missing board column: ${column.elementId}`);
-        }
-
-        const columnTasks = tasks.filter(
-            (task) => task.status === column.status,
-        );
-        const cards = columnTasks.map(renderTaskCardTemplate).join("");
-        element.innerHTML = `
-            <header class="column-header"><h2>${column.title}</h2></header>
-            ${cards || '<p class="empty-column">No tasks</p>'}
-        `;
-    }
-
-    const metrics = calculateBoardMetrics(tasks);
-    const metricElements = {
-        total: "metric-total",
-        inProgress: "metric-in-progress",
-        highPriority: "metric-high-priority",
-        completed: "metric-completed",
-    };
-
-    for (const [metric, elementId] of Object.entries(metricElements)) {
-        const element = documentRef.getElementById(elementId);
-        if (!element) {
-            throw new Error(`Missing board metric: ${elementId}`);
-        }
-        element.textContent = String(metrics[metric]);
-    }
-
-    return metrics;
-}
-
-function themeInitialiser(documentRef = document) {
-    const root = documentRef.documentElement;
-    try {
-        if (localStorage.getItem("theme") === "dark") {
-            root.setAttribute("data-theme", "dark");
-        }
-    } catch (error) {
-        console.error("[Theme] Unable to restore the saved theme.", error);
-    }
-}
-
-function initializeUI(documentRef = document) {
-    const htmlRoot = documentRef.documentElement;
-    const themeToggle = documentRef.getElementById("theme-toggle-btn");
-    const activityDrawer = documentRef.getElementById("activity-drawer");
-    const modal = documentRef.getElementById("task-modal");
-    const board = documentRef.querySelector(".board-columns-container");
-
-    themeInitialiser(documentRef);
-
-    themeToggle?.addEventListener("click", () => {
-        const isDark = htmlRoot.getAttribute("data-theme") === "dark";
-        if (isDark) {
-            htmlRoot.removeAttribute("data-theme");
-        } else {
-            htmlRoot.setAttribute("data-theme", "dark");
-        }
-        try {
-            localStorage.setItem("theme", isDark ? "light" : "dark");
-        } catch (error) {
-            console.error("[Theme] Unable to save the selected theme.", error);
-        }
-    });
-
-    documentRef
-        .getElementById("hamburgerMenu")
-        ?.addEventListener("click", () => {
-            documentRef.getElementById("navbar")?.classList.toggle("show");
-        });
-
-    const closeModal = () => {
-        if (modal) modal.style.display = "none";
-    };
-    documentRef
-        .getElementById("open-modal-btn")
-        ?.addEventListener("click", () => {
-            if (modal) modal.style.display = "flex";
-        });
-    documentRef
-        .getElementById("modal-close-btn")
-        ?.addEventListener("click", closeModal);
-    documentRef
-        .getElementById("modal-cancel")
-        ?.addEventListener("click", closeModal);
-    modal?.addEventListener("click", (event) => {
-        if (event.target === modal) closeModal();
-    });
-
-    documentRef
-        .getElementById("drawer-btn-close")
-        ?.addEventListener("click", () => {
-            activityDrawer?.classList.remove("is-open");
-            activityDrawer?.setAttribute("aria-hidden", "true");
-        });
-
-    board?.addEventListener("click", (event) => {
-        const card = event.target.closest(".task-card");
-        if (!card || !board.contains(card)) return;
-        activityDrawer?.classList.add("is-open");
-        activityDrawer?.setAttribute("aria-hidden", "false");
-    });
-
-    board?.addEventListener("keydown", (event) => {
-        if (
-            (event.key === "Enter" || event.key === " ") &&
-            event.target.matches(".task-card")
-        ) {
-            event.preventDefault();
-            activityDrawer?.classList.add("is-open");
-            activityDrawer?.setAttribute("aria-hidden", "false");
-        }
-    });
-
-    documentRef.addEventListener("click", (event) => {
-        if (
-            activityDrawer?.classList.contains("is-open") &&
-            !activityDrawer.contains(event.target) &&
-            !board?.contains(event.target)
-        ) {
-            activityDrawer.classList.remove("is-open");
-            activityDrawer.setAttribute("aria-hidden", "true");
-        }
-    });
-}
-
-function initializeTaskBoard({ getTasks, createTask }, documentRef = document) {
-    const board = documentRef.querySelector(".board-columns-container");
-    const form = documentRef.getElementById("task-form");
-    const errorMessage = documentRef.getElementById("task-form-error");
-
-    renderBoard(getTasks(), documentRef);
-
-    if (form) {
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-            const formData = new FormData(form);
-            const task = createTask({
-                title: formData.get("title"),
-                category: formData.get("category"),
-                priority: formData.get("priority"),
-                desc: formData.get("description"),
-                assignee: "Unassigned",
-                status: "todo",
-            });
-
-            if (!task) {
-                if (errorMessage) {
-                    errorMessage.textContent =
-                        "Please enter valid task details.";
-                }
-                return;
-            }
-
-            if (errorMessage) errorMessage.textContent = "";
-            form.reset();
-            documentRef.getElementById("task-modal").style.display = "none";
-            renderBoard(getTasks(), documentRef);
-        });
-    }
-
-    return board;
-}
-
 function renderBoardColumns(tasks) {
     const statuses = ["todo", "in_progress", "review", "done"];
 
@@ -246,6 +199,15 @@ function renderBoardColumns(tasks) {
             return;
         }
 
+        const columnTitleCont = document.createElement("header");
+        columnTitleCont.className = "column-header";
+        
+        const columnTitle = document.createElement("h2");
+        columnTitle.className = "column-title";
+        columnTitle.textContent = stat.replace("_", " ").toUpperCase();
+
+        columnTitleCont.appendChild(columnTitle);
+
         const matchingTasks = tasks.filter((task) => task.status.toLowerCase() === stat.toLowerCase());
 
         const fragment = document.createDocumentFragment();
@@ -256,14 +218,44 @@ function renderBoardColumns(tasks) {
         });
 
         // Reset container contents safely and append fragment
-        columnContainer.replaceChildren(fragment);
+        columnContainer.replaceChildren(columnTitleCont, fragment);
+    });
+}
+
+function renderDashboardMetrics(metrics) {
+    const totalElem = document.querySelector("#metric-total");
+    const todoElem = document.querySelector("#metric-in-todo");
+    const highPriorityElem = document.querySelector("#metric-high-priority");
+    const inProgressElem = document.querySelector("#metric-in-progress");
+    const reviewElem = document.querySelector("#metric-review");
+    const doneElem = document.querySelector("#metric-done");
+
+    if (totalElem) totalElem.textContent = metrics.total;
+    if (todoElem) todoElem.textContent = metrics.todo;
+    if (highPriorityElem) highPriorityElem.textContent = metrics.highPriority;
+    if (inProgressElem) inProgressElem.textContent = metrics.inProgress;
+    if (reviewElem) reviewElem.textContent = metrics.review;
+    if (doneElem) doneElem.textContent = metrics.done;
+}
+
+function highlightOverdueTasks(overdueTaskIds) {
+    const cardElems = document.querySelectorAll('.task-card');
+    cardElems.forEach((cardElem) => {
+        const taskId = cardElem.dataset.taskId;
+        if (overdueTaskIds.includes(taskId)) {
+            cardElem.classList.add('overdue');
+        } else {
+            cardElem.classList.remove('overdue');
+        }
     });
 }
 
 export {
-    createTaskCardElement,
     initializeTaskBoard,
     initializeUI,
-    renderBoard,
     themeInitialiser,
+    createTaskCardElement,
+    renderBoardColumns,
+    renderDashboardMetrics,
+    highlightOverdueTasks,
 };

@@ -11,7 +11,7 @@
     --primary-color: #0052cc;
     --primary-hover: #0747a6;
     --accent-btn: #ffab00;
-    --card-shadow: 0 4px 5px rgba(9, 30, 66, 0.9);
+    --card-shadow: 0 2px 6px 2px rgba(9, 30, 66, 0.5);
     --task-btn-icon-bg: #7172732f;
     --task-btn-icon-bg-hover: #c5c5ca;
     --task-btn-icon-text: #172b4d;
@@ -192,6 +192,7 @@ body {
     border-radius: 4px;
     border: none;
     outline: none;
+    cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
 
@@ -271,12 +272,20 @@ body {
     color: var(--metric-value);
 }
 
+.highlight-todo {
+    color: #40464f;
+}
+
 .highlight-progress {
     color: #0052cc;
 }
 
 .highlight-alert {
     color: #de350b;
+}
+
+.highlight-review {
+    color: #ffab00;
 }
 
 .highlight-done {
@@ -392,7 +401,7 @@ body {
     transform: scale(1.05);
 }
 
-.column-header h2 {
+.column-header .column-title {
     font-size: 1.2rem;
     color: var(--text-main);
     margin-bottom: 1rem;
@@ -438,6 +447,7 @@ body {
     font-size: 0.8rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
+    text-transform: capitalize;
 }
 
 .activity-drawer {
@@ -799,4 +809,8 @@ body {
 .board-gallery-grid .project-cards:hover {
     transform: translateY(-5%);
     box-shadow: 0 8px 12px rgba(9, 30, 66, 0.5);
+}
+
+.overdue {
+    border: 2px solid var(--badge-high-text);
 }

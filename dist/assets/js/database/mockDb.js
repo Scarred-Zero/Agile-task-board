@@ -40,7 +40,7 @@ let tasks = [
         category: "frontend",
         priority: "low",
         desc: "This is a Mock Description for this task",
-        assignee: "Xero Bot",
+        assignee: "Marcus Brit",
         status: "done",
         point: 2,
     },
@@ -74,6 +74,16 @@ let tasks = [
         status: "todo",
         point: 8,
     },
+    {
+        id: 208,
+        title: "Add New Feature to Zoe2.6",
+        category: "backend",
+        priority: "high",
+        desc: "Implement a new feature to Zoe2.6 that allows it to learn from user interactions and adapt its responses accordingly.",
+        assignee: "Xero Bot",
+        status: "review",
+        point: 10,
+    },
 ];
 
 const isValidTask = (task) => {
@@ -91,25 +101,8 @@ const isValidTask = (task) => {
     );
 };
 
-// function getTasks() {
-//     return tasks.map((task) => ({ ...task }));
-// }
-
 function getTasks() {
-    // 1. Create a brand new, empty list
-    let copiedTasks = [];
-
-    // 2. Loop through every task in the original list automatically
-    for (let currentTask of tasks) {
-        // 3. Create a brand new empty object for this specific task
-        let taskCopy = Object.assign({}, currentTask, gould);
-
-        // 4. Add the fresh copy into our new list
-        copiedTasks.push(taskCopy);
-    }
-
-    // 5. Give back the brand new list
-    return copiedTasks;
+    return tasks.map((task) => ({ ...task }));
 }
 
 function syncToStorage() {

@@ -3,29 +3,36 @@ const calculateBoardMetrics = (tasksArray) => {
     const metrics = {
         total: 0,
         highPriority: 0,
+        todo: 0,
         inProgress: 0,
-        completed: 0,
+        review: 0,
+        done: 0,
     };
+
 
     // 2. Loop through every single task in the array
     for (let task of tasksArray) {
-        // Add 1 to the total count for every task
         metrics.total += 1;
 
-        // If the task priority is high, add 1 to highPriority
-        if (task.priority === "high") {
+        if(task.priority === "high") {
             metrics.highPriority += 1;
         }
-
-        // If the task status is in_progress, add 1 to inProgress
-        if (task.status === "in_progress") {
-            metrics.inProgress += 1;
-        }
-
-        // If the task status is done, add 1 to completed
-        if (task.status === "done") {
-            metrics.completed += 1;
-        }
+            switch(task.status) {
+                case "todo":
+                    metrics.todo += 1;
+                    break;
+                case "in_progress":
+                    metrics.inProgress += 1;
+                    break;
+                case "review":
+                    metrics.review += 1;
+                    break;
+                case "done":
+                    metrics.done += 1;
+                    break;
+                default:
+                    console.warn(`Unknown status '${task.status}' encountered for task ID ${task.id}.`);
+            }
     }
 
     // 3. Return the final count object
@@ -42,10 +49,10 @@ const calculateTotalStoryPoints = (tasks) => tasks.reduce((total, task) => total
 //             metrics.total += 1;
 //             metrics.highPriority += task.priority === "high" ? 1 : 0;
 //             metrics.inProgress += task.status === "in_progress" ? 1 : 0;
-//             metrics.completed += task.status === "done" ? 1 : 0;
+//             metrics.done += task.status === "done" ? 1 : 0;
 //             return metrics;
 //         },
-//         { total: 0, highPriority: 0, inProgress: 0, completed: 0 },
+//         { total: 0, highPriority: 0, inProgress: 0, done: 0 },
 //     );
 
 export { calculateBoardMetrics, calculateTotalStoryPoints };
