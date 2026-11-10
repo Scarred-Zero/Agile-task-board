@@ -1,10 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Agile task board - layout poitioning</title>
-        <link rel="icon" type="image/jpeg" href="./assets/img/favicon.jpg">
+        <link rel="icon" type="image/jpeg" href="./assets/img/favicon.jpg" />
+        <!-- Run this immediately to prevent the flash --> -->
+        <script>
+            if (
+                localStorage.getItem("theme") === "dark" ||
+                (!localStorage.getItem("theme") &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        </script>
         <link rel="stylesheet" href="./assets/css/styles.css" />
         <link rel="stylesheet" href="./assets/css/responsiveness.css" />
         <link
@@ -28,10 +38,7 @@
                     <li><a href="#">Settings</a></li>
                 </ul>
             </nav>
-            <div
-                class="hamburger-menu"
-                id="hamburgerMenu"
-            >
+            <div class="hamburger-menu" id="hamburgerMenu">
                 <i class="bx bx-menu"></i>
             </div>
             <div class="header-actions">
@@ -43,10 +50,7 @@
                     <span class="text-short"> 🌓 </span>
                     <span class="text-long"> 🌓 Theme</span>
                 </button>
-                <button
-                    class="btn-small new-task-btn"
-                    id="open-modal-btn"
-                >
+                <button class="btn-small new-task-btn" id="open-modal-btn">
                     <span class="text-short"><i class="bx bx-plus"></i></span>
                     <span class="text-long"
                         ><i class="bx bx-plus"></i> New Task
@@ -64,23 +68,41 @@
                 </div>
                 <div class="metric-card">
                     <span class="metric-title">Todo</span>
-                    <span class="metric-value highlight-todo" id="metric-in-todo">0</span>
+                    <span
+                        class="metric-value highlight-todo"
+                        id="metric-in-todo"
+                        >0</span
+                    >
                 </div>
                 <div class="metric-card">
                     <span class="metric-title">In Progress</span>
-                    <span class="metric-value highlight-progress" id="metric-in-progress">0</span>
+                    <span
+                        class="metric-value highlight-progress"
+                        id="metric-in-progress"
+                        >0</span
+                    >
                 </div>
                 <div class="metric-card">
                     <span class="metric-title">High Priority</span>
-                    <span class="metric-value highlight-alert" id="metric-high-priority">0</span>
+                    <span
+                        class="metric-value highlight-alert"
+                        id="metric-high-priority"
+                        >0</span
+                    >
                 </div>
                 <div class="metric-card">
                     <span class="metric-title">Review</span>
-                    <span class="metric-value highlight-review" id="metric-review">0</span>
+                    <span
+                        class="metric-value highlight-review"
+                        id="metric-review"
+                        >0</span
+                    >
                 </div>
                 <div class="metric-card">
                     <span class="metric-title">Completed</span>
-                    <span class="metric-value highlight-done" id="metric-done">0</span>
+                    <span class="metric-value highlight-done" id="metric-done"
+                        >0</span
+                    >
                 </div>
             </section>
 
@@ -101,22 +123,16 @@
             </div>
 
             <div class="board-columns-container">
-                <section class="kanban-column" id="todo-task-cards">
+                <section class="kanban-column" id="todo-task-cards"></section>
 
-                </section>
+                <section
+                    class="kanban-column"
+                    id="in_progress-task-cards"
+                ></section>
 
-                <section class="kanban-column" id="in_progress-task-cards">
+                <section class="kanban-column" id="review-task-cards"></section>
 
-                </section>
-
-                <section class="kanban-column" id="review-task-cards">
-
-                </section>
-
-                <section class="kanban-column" id="done-task-cards">
-
-                </section>
-
+                <section class="kanban-column" id="done-task-cards"></section>
             </div>
 
             <section class="board-gallery-grid">

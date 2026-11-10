@@ -21,14 +21,20 @@ function initializeUI(documentRef = document) {
     themeInitialiser(documentRef);
 
     themeToggle?.addEventListener("click", () => {
+        // 1. Determine the new theme state
         const isDark = htmlRoot.getAttribute("data-theme") === "dark";
-        if (isDark) {
-            htmlRoot.removeAttribute("data-theme");
-        } else {
+        const nextTheme = isDark ? "light" : "dark";
+
+        // 2. Update the DOM attribute
+        if (nextTheme === "dark") {
             htmlRoot.setAttribute("data-theme", "dark");
+        } else {
+            htmlRoot.removeAttribute("data-theme");
         }
+
+        // 3. Persist the change
         try {
-            localStorage.setItem("theme", isDark ? "light" : "dark");
+            localStorage.setItem("theme", nextTheme);
         } catch (error) {
             console.error("[Theme] Unable to save the selected theme.", error);
         }
@@ -201,21 +207,30 @@ function renderBoardColumns(tasks) {
 
         const columnTitleCont = document.createElement("header");
         columnTitleCont.className = "column-header";
-        
+
         const columnTitle = document.createElement("h2");
         columnTitle.className = "column-title";
         columnTitle.textContent = stat.replace("_", " ").toUpperCase();
 
         columnTitleCont.appendChild(columnTitle);
 
-        const matchingTasks = tasks.filter((task) => task.status.toLowerCase() === stat.toLowerCase());
+        const matchingTasks = tasks.filter(
+            (task) => task.status.toLowerCase() === stat.toLowerCase(),
+        );
 
         const fragment = document.createDocumentFragment();
 
-        matchingTasks.forEach((task) => {
-            const cardElement = createTaskCardElement(task);
-            fragment.appendChild(cardElement);
-        });
+        if (matchingTasks.length === 0) {
+            const emptyColumn = document.createElement("div");
+            emptyColumn.className = "empty-column-message";
+            emptyColumn.textContent = "No tasks in this column.🥲";
+            fragment.appendChild(emptyColumn);
+        } else {
+            matchingTasks.forEach((task) => {
+                const cardElement = createTaskCardElement(task);
+                fragment.appendChild(cardElement);
+            });
+        }
 
         // Reset container contents safely and append fragment
         columnContainer.replaceChildren(columnTitleCont, fragment);
@@ -239,13 +254,13 @@ function renderDashboardMetrics(metrics) {
 }
 
 function highlightOverdueTasks(overdueTaskIds) {
-    const cardElems = document.querySelectorAll('.task-card');
+    const cardElems = document.querySelectorAll(".task-card");
     cardElems.forEach((cardElem) => {
         const taskId = cardElem.dataset.taskId;
         if (overdueTaskIds.includes(taskId)) {
-            cardElem.classList.add('overdue');
+            cardElem.classList.add("overdue");
         } else {
-            cardElem.classList.remove('overdue');
+            cardElem.classList.remove("overdue");
         }
     });
 }

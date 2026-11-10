@@ -28,6 +28,7 @@
     --tag-bg: #5193bf65;
     --tag-text: #0369a1;
     --activity-text: #f8fafc;
+    --empty-column-bg: #343945ad;
 }
 
 [data-theme="dark"] {
@@ -65,6 +66,7 @@
     --activity-text: #f8fafc;
     --project-card-h3: #416cbc;
     --project-text: #5e6c84;
+    --empty-column-bg: #343945ad;
 }
 
 * {
@@ -813,4 +815,12 @@ body {
 
 .overdue {
     border: 2px solid var(--badge-high-text);
+}
+
+.empty-column-message {
+    background-color: var(--empty-column-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    color: var(--text-main);
+    box-shadow: var(--card-shadow);
 }
