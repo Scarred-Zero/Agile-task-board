@@ -49,19 +49,23 @@ function initializeUI(documentRef = document) {
     const closeModal = () => {
         if (modal) modal.style.display = "none";
     };
+
     documentRef
         .querySelector("#open-modal-btn")
         ?.addEventListener("click", () => {
             if (modal) modal.style.display = "flex";
         });
+
     documentRef
         .querySelector("#modal-close-btn")
         ?.addEventListener("click", closeModal);
+
     documentRef
         .querySelector("#modal-cancel")
         ?.addEventListener("click", closeModal);
-    modal?.addEventListener("click", (event) => {
-        if (event.target === modal) closeModal();
+
+    modal?.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
     });
 
     documentRef
@@ -99,14 +103,33 @@ function initializeUI(documentRef = document) {
             activityDrawer.setAttribute("aria-hidden", "true");
         }
     });
+
+    board?.addEventListener("click", (event) => {
+        const optionBtn = event.target.closest(".btn-icon");
+        if (optionBtn && board.contains(optionBtn)) {
+            event.stopPropagation(); // Prevent bubbling to card drawer trigger
+            const card = optionBtn.closest(".task-card");
+            const taskId = card ? card.dataset.id : null;
+            // console.log(
+            //     `[Task Options] Action triggered for Task ID: ${taskId}`,
+            // );
+            alert("Hello Balls")
+            return;
+        }
+
+        // const card = event.target.closest(".task-card");
+        // if (!card || !board.contains(card)) return;
+        // activityDrawer?.classList.add("is-open");
+        // activityDrawer?.setAttribute("aria-hidden", "false");
+    });
 }
 
-function initializeTaskBoard({ getTasks, createTask }, documentRef = document) {
+function initializeTaskBoard(getTasks, createTask, documentRef = document) {
     const board = documentRef.querySelector(".board-columns-container");
     const form = documentRef.querySelector("#task-form");
     const errorMessage = documentRef.querySelector("#task-form-error");
 
-    renderBoard(getTasks(), documentRef);
+    renderBoardColumns(getTasks, documentRef);
 
     if (form) {
         form.addEventListener("submit", (event) => {
@@ -117,7 +140,7 @@ function initializeTaskBoard({ getTasks, createTask }, documentRef = document) {
                 category: formData.get("category"),
                 priority: formData.get("priority"),
                 desc: formData.get("description"),
-                assignee: "Unassigned",
+                assignee: formData.get("assignee") || "Unassigned",
                 status: "todo",
             });
 
@@ -132,7 +155,7 @@ function initializeTaskBoard({ getTasks, createTask }, documentRef = document) {
             if (errorMessage) errorMessage.textContent = "";
             form.reset();
             documentRef.querySelector(".task-modal").style.display = "none";
-            renderBoard(getTasks(), documentRef);
+            renderBoardColumns(getTasks(), documentRef);
         });
     }
 

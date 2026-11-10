@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Agile task board - layout poitioning</title>
         <link rel="icon" type="image/jpeg" href="./assets/img/favicon.jpg" />
-        <!-- Run this immediately to prevent the flash --> -->
+        <!-- Run this immediately to prevent the flash -->
+        -->
         <script>
             if (
                 localStorage.getItem("theme") === "dark" ||
@@ -526,6 +527,17 @@
                             placeholder="Task details..."
                             required
                         ></textarea>
+                    </div>
+
+                    <div class="modal-form area-assignee">
+                        <label for="task-assignee">Task Assignee</label>
+                        <input
+                            type="text"
+                            id="task-assignee"
+                            name="assignee"
+                            placeholder="e.g., Xero Bot"
+                            required
+                        />
                     </div>
 
                     <p class="form-error" id="task-form-error" role="alert"></p>

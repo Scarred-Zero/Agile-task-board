@@ -629,6 +629,7 @@ body {
         "category"
         "priority"
         "desc"
+        "assignee"
         "actions" !important;
     gap: 0.2rem;
     margin-top: 0.5rem;
