@@ -74,16 +74,16 @@ let tasks = [
         status: "todo",
         point: 8,
     },
-    // {
-    //     id: 208,
-    //     title: "Add New Feature to Zoe2.6",
-    //     category: "backend",
-    //     priority: "high",
-    //     desc: "Implement a new feature to Zoe2.6 that allows it to learn from user interactions and adapt its responses accordingly.",
-    //     assignee: "Xero Bot",
-    //     status: "review",
-    //     point: 10,
-    // },
+    {
+        id: 208,
+        title: "Add New Feature to Zoe2.6",
+        category: "backend",
+        priority: "high",
+        desc: "Implement a new feature to Zoe2.6 that allows it to learn from user interactions and adapt its responses accordingly.",
+        assignee: "Xero Bot",
+        status: "review",
+        point: 10,
+    },
 ];
 
 const isValidTask = (task) => {
@@ -184,7 +184,13 @@ function updateTaskInDatabase(taskId, changes) {
 }
 
 function deleteTaskFromDatabase(taskId) {
-    const taskIndex = tasks.findIndex((task) => task.id === taskId);
+    if (taskId === null || taskId === undefined) {
+        return false;
+    }
+
+    const taskIndex = tasks.findIndex(
+        (task) => String(task.id) === String(taskId),
+    );
     if (taskIndex === -1) {
         return false;
     }

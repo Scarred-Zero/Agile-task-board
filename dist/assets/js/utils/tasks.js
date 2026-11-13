@@ -8,14 +8,14 @@ import { validateTaskInput } from "./validation.js";
 
 const VALID_STATUSES = ["todo", "in_progress", "review", "done"];
 
-const createNewTaskObj = (
+const createNewTaskObj = ({
     title,
     category,
     priority,
     desc,
     assignee,
     status = "todo",
-) => {
+}) => {
     if (!validateTaskInput(title, category, priority, desc, assignee, status)) {
         return false;
     }

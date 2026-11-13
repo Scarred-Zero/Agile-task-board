@@ -1,4 +1,4 @@
-import { getTasks } from "./database/mockDb.js";
+import { getTasks, loadFromStorage } from "./database/mockDb.js";
 import { calculateBoardMetrics } from "./utils/calc.js";
 import {
     initializeTaskBoard,
@@ -8,18 +8,16 @@ import {
 } from "./dom/script.js";
 import { createNewTaskObj } from "./utils/tasks.js";
 
-
 function initApp() {
+    loadFromStorage();
     const tasks = getTasks();
     const metrics = calculateBoardMetrics(tasks);
 
-    const createNewTask = createNewTaskObj(tasks)
-
     renderBoardColumns(tasks);
     renderDashboardMetrics(metrics);
-    initializeUI()
-    initializeTaskBoard(tasks, createNewTask)
+    initializeUI();
+    initializeTaskBoard(tasks, createNewTaskObj);
 }
 
 // Execute when DOM tree is fully parsed
-document.addEventListener('DOMContentLoaded', initApp);
+document.addEventListener("DOMContentLoaded", initApp);

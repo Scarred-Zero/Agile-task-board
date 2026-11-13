@@ -36,7 +36,7 @@
     --bg-canvas: #0b0f19;
     --bg-surface: #1e293b;
     --bg-column: #111827;
-    --header-h1: #ffffff;   
+    --header-h1: #ffffff;
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
     --base-border: 1px solid #334155;
@@ -366,6 +366,25 @@ body {
     background-color: var(--task-btn-icon-bg-hover);
 }
 
+.task-card-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem;
+    border-radius: 8px;
+}
+
+.task-card-footer .delete-task-btn {
+    background-color: var(--badge-high-bg);
+    color: var(--badge-high-text);
+}
+
+.task-card-footer .delete-task-btn:hover {
+    background-color: #e53e14;
+    color: black;
+}
+
 .dropdown-menu {
     position: absolute;
     top: 2rem;
@@ -488,7 +507,7 @@ body {
     color: gold;
 }
 
-.drawer-header .btn-close {
+.drawer-header .activity-btn-close {
     flex-shrink: 0;
     position: absolute;
     top: 2rem;
@@ -502,7 +521,7 @@ body {
     color: #ffffff;
 }
 
-.drawer-header .btn-close:hover {
+.drawer-header .activity-btn-close:hover {
     background-color: rgba(192, 120, 120, 0.403);
     color: #ffab00;
 }
