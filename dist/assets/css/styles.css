@@ -27,7 +27,7 @@
     --badge-medium-text: goldenrod;
     --tag-bg: #5193bf65;
     --tag-text: #0369a1;
-    --activity-text: #f8fafc;
+    --activity-text: #000000;
     --empty-column-bg: #343945ad;
 }
 
@@ -744,7 +744,7 @@ body {
 .modal-form textarea:focus {
     outline: none;
     border: 1.5px solid #00875a;
-    background-color: #ffffff;
+    background-color: var(--bg-surface);
     transition: all 0.3ms ease-in-out;
 }
 
@@ -844,3 +844,19 @@ body {
     color: var(--text-main);
     box-shadow: var(--card-shadow);
 }
+
+.filter-bar {
+    background-color: var(--bg-surface);
+    padding: 0.3rem;
+    border-radius: 10px;
+}
+
+#category-filter {
+    background-color: var(--bg-surface);
+    color: var(--activity-text);
+    outline: none;
+    border: none;
+}
+
+
+

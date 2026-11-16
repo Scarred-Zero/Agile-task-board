@@ -1,9 +1,5 @@
-import {
-    deleteTaskFromDatabase,
-    getTasks,
-    syncToStorage,
-} from "../database/mockDb.js";
-import { calculateBoardMetrics } from "../utils/calc.js";
+import { deleteTaskFromDatabase, getTasks } from "../database/mockDb.js";
+import { refreshDashboard } from "../utils/tasks.js";
 
 function themeInitialiser(documentRef = document) {
     const root = documentRef.documentElement;
@@ -92,11 +88,7 @@ function initializeUI(documentRef = document) {
                 }
 
                 const tasks = getTasks();
-                renderBoardColumns(tasks, documentRef);
-                renderDashboardMetrics(
-                    calculateBoardMetrics(tasks),
-                    documentRef,
-                );
+                refreshDashboard(tasks, documentRef);
                 console.log(
                     `[Delete Task] Action triggered for Task ID: ${taskId}`,
                 );
@@ -160,11 +152,7 @@ function initializeTaskBoard(tasks, createTask, documentRef = document) {
             form.reset();
             documentRef.querySelector(".task-modal").style.display = "none";
             const updatedTasks = getTasks();
-            renderBoardColumns(updatedTasks, documentRef);
-            renderDashboardMetrics(
-                calculateBoardMetrics(updatedTasks),
-                documentRef,
-            );
+            refreshDashboard(updatedTasks, documentRef);
         });
     }
 
@@ -305,6 +293,7 @@ function highlightOverdueTasks(overdueTaskIds) {
         }
     });
 }
+
 
 export {
     initializeTaskBoard,

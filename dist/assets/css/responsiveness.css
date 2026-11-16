@@ -42,13 +42,22 @@
     /* Transition Kanban columns into a 2x2 Grid on tablets */
     .kanban-board {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
         gap: 1.5rem;
         padding: 1.5rem;
     }
 
     .kanban-column {
         width: 100% !important;
+    }
+
+    .board-columns-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .filter-bar {
+        width: fit-content
     }
 
     .modal-backdrop #modal-title {

@@ -4,6 +4,8 @@ import {
     getTasks,
     updateTaskInDatabase,
 } from "../database/mockDb.js";
+import { renderBoardColumns, renderDashboardMetrics } from "../dom/script.js";
+import { calculateBoardMetrics } from "./calc.js";
 import { validateTaskInput } from "./validation.js";
 
 const VALID_STATUSES = ["todo", "in_progress", "review", "done"];
@@ -31,7 +33,7 @@ const createNewTaskObj = ({
         point: 0,
     };
 
-    return addTaskToDatabase(newTask) ? newTask : false;
+    return addTaskToDatabase(newTask) ? newTask  : false;
 };
 
 const formatTaskSumamry = (taskObj) => {
@@ -64,15 +66,9 @@ const searchTasksByKeyword = (tasksArray, keyword) => {
     );
 };
 
-const updateTaskStatus = (taskId, newStatus) => VALID_STATUSES.includes(newStatus) && updateTaskInDatabase(taskId, { status: newStatus });
-
-const exportTasksByCategory = (categoryName) => {
-    const normalisedCategory = categoryName.toLowerCase();
-    const filteredTasks = getTasks().filter(
-        (task) => task.category.toLowerCase() === normalisedCategory,
-    );
-    return JSON.stringify(filteredTasks, null, 2);
-};
+const updateTaskStatus = (taskId, newStatus) =>
+    VALID_STATUSES.includes(newStatus) &&
+    updateTaskInDatabase(taskId, { status: newStatus });
 
 const getCategoryTaskCounts = (tasksArray) =>
     tasksArray.reduce((counts, task) => {
@@ -87,11 +83,24 @@ const getCategoryTaskCounts = (tasksArray) =>
 const deleteTaskById = (taskId) => deleteTaskFromDatabase(taskId);
 
 // use the .filter() method to extract tasks with a specific status from the tasksArray
-const extractedTasksByStatus = (tasksArray, targetStatus) => tasksArray.filter((task) => task.status.toLowerCase() === targetStatus.toLowerCase(),);
+const extractedTasksByStatus = (tasksArray, targetStatus) =>
+    tasksArray.filter(
+        (task) => task.status.toLowerCase() === targetStatus.toLowerCase(),
+    );
 
-const getTaskById = (tasksArray, taskId) => tasksArray.find((task) => task.id === taskId);
+const getTaskById = (tasksArray, taskId) =>
+    tasksArray.find((task) => task.id === taskId);
 
-const hasUrgentPendingTasks = (tasksArray, targetStatus = "done", priority = "high") => tasksArray.some((task) => task.status !== targetStatus.toLowerCase() && task.priority.toLowerCase() ===  priority.toLowerCase());
+const hasUrgentPendingTasks = (
+    tasksArray,
+    targetStatus = "done",
+    priority = "high",
+) =>
+    tasksArray.some(
+        (task) =>
+            task.status !== targetStatus.toLowerCase() &&
+            task.priority.toLowerCase() === priority.toLowerCase(),
+    );
 
 const generateSprintSummaryReport = (tasksArray) => {
     return tasksArray.reduce(
@@ -114,12 +123,36 @@ const generateSprintSummaryReport = (tasksArray) => {
     );
 };
 
+const refreshDashboard = (tasks, documentRef = document) => {
+    const metrics = calculateBoardMetrics(tasks);
+    renderBoardColumns(tasks, documentRef);
+    renderDashboardMetrics(metrics, documentRef);
+};
 
+const handleCategoryFilter = (event, allTasks, documentRef = document) => {
+    const selectedCategory = event.target.value.toLowerCase();
+
+    const filteredTasks =
+        selectedCategory === "all"
+            ? allTasks
+            : allTasks.filter(
+                  (task) => task.category.toLowerCase() === selectedCategory,
+              );
+
+    renderBoardColumns(filteredTasks, documentRef);
+};
+
+const categoryFilter = document.querySelector("#category-filter");
+if (categoryFilter) {
+  categoryFilter.addEventListener("change", (event) => {
+    const allTasks = getTasks()
+    handleCategoryFilter(event, allTasks);
+  });
+}
 
 export {
     createNewTaskObj,
     deleteTaskById,
-    exportTasksByCategory,
     extractedTasksByStatus,
     filterTasksByPriority,
     formatTaskSumamry,
@@ -130,5 +163,6 @@ export {
     searchTasksByKeyword,
     updateTaskStatus,
     generateSprintSummaryReport,
+    refreshDashboard,
+    handleCategoryFilter,
 };
-
